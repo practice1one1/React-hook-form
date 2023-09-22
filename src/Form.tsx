@@ -1,14 +1,29 @@
 import { useForm, Controller, FieldValues } from "react-hook-form";
 import "./Form.css";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 //Using the name prop (with "groupname.member" eg "address.street") of the controller comp, you can return a single object that groups other input-values together as prop-values
 function Form() {
+  const schema = z.object({
+    name: z
+      .string()
+      .min(2, { message: "Name should be more than 2 characters" }),
+    email: z.string(),
+    address: z.object({
+      street: z.string(),
+      city: z.string(),
+    }),
+  });
+
+  type FormData = z.infer<typeof schema>;
+
   const {
     handleSubmit,
     control,
     setValue,
     formState: { errors },
-  } = useForm(); //other meths: getValues,
+  } = useForm<FormData>({ resolver: zodResolver(schema) }); //other meths: getValues,
 
   const onSubmit = (data: FieldValues) => {
     // data will contain the form values, including the group in an object.
