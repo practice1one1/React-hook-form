@@ -1,0 +1,12 @@
+.custom-bg {
+  background-color: rgb(235, 235, 235);
+  color: red;
+}
+
+.custom-label {
+  font-size: large;
+}
+
+.custom-button {
+  margin-left: 5px
+}
