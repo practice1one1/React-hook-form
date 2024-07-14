@@ -1,5 +1,10 @@
+// SKILLS LEARNT IN THIS FILE
+// -Controller component from hook form
+// -setValue() from hook form to programmatically set values for registered fields instead of using inputs
+// -Using zod schema definition
+
 import { useForm, Controller, FieldValues } from "react-hook-form";
-import "./Form.css";
+import "./Form_controllerComps.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -25,28 +30,28 @@ function Form() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) }); //other meths: getValues,
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmitData = (data: FieldValues) => { //data can also be assigned type FormData
     // data will contain the form values, including the group in an object.
     console.log(data);
   };
 
-  // Manually set the values of address fields
+  // Programmatically set the values of address fields by running this
   const setAddressValues = () => {
     setValue("address.street", "123 Main St");
     setValue("address.city", "Example City");
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitData)}>
       <div>
         <label className="form-label mb-1">Name</label>
         <Controller //use Controller comp from hook-form to render diff elems
           name="name"
           control={control}
+          //defaultValue="default_name" //sets a default value for the input, or any elem rendered
           render={({ field }) => (
             <input className="form-control mb-3 custom-bg" {...field} />
           )}
-          //defaultValue="default_name" //sets a default value for the input, or any elem rendered
         />
       </div>
 
@@ -74,7 +79,7 @@ function Form() {
           />
         </div>
         <div>
-          <label className="form-label mb-1">City:</label>
+          <label className="form-label mb-1">City</label>
           <Controller
             name="address.city"
             control={control}
@@ -88,7 +93,7 @@ function Form() {
       <button
         type="button"
         className="btn btn-outline-light"
-        onClick={setAddressValues}
+        onClick={setAddressValues} //programmatically set the values of the registered Address field instead of from the above city & street inputs
       >
         Set Address
       </button>
