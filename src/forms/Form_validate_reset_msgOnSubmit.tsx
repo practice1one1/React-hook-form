@@ -5,13 +5,14 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import "../allForms.css"
 
 interface FormValues {
   password: string;
   confirmPassword: string
 }
 
-export default function App() {
+export default function Form_validate_reset_msgOnSubmit() {
   const {
     register,
     handleSubmit,
@@ -21,19 +22,18 @@ export default function App() {
   const [isValid, setIsValid] = useState(false);
 
   return (
-    <div className="App">
-      <h2>React Hook Form Practice 1</h2>
-      <form
-        onSubmit={handleSubmit(
-          (data) => {
-            console.log("success: ", data);
-            setIsValid(true);
-          },
-          (e) => {
-            console.error("fail: ", e);
-            setIsValid(false);
-          }
-        )}
+    <div className="container">
+      <h2 className="">React Hook Form Practice 1</h2>
+      <form className="container" onSubmit={handleSubmit(
+        (data) => {
+          console.log("success: ", data);
+          setIsValid(true);
+        },
+        (e) => {
+          console.error("fail: ", e);
+          setIsValid(false);
+        }
+      )}
       >
         <input
           {...register("password", {
@@ -58,19 +58,21 @@ export default function App() {
         <br />
         <br />
         <input
-          style={{ fontSize: "15px", padding: "5px 10px" }}
+          className="input"
           type={"submit"}
         />
       </form>
 
-      <button
-        style={{ fontSize: "15px", padding: "5px 10px", marginLeft: "20px" }}
-        children={"Clear"}
-        onClick={() => {
-          setIsValid(false);
-          reset();
-        }}
-      />
+      <div style={{ padding: "0px 12px", width: "100%" }}>
+        <button
+          className="input"
+          children={"Clear"}
+          onClick={() => {
+            setIsValid(false);
+            reset();
+          }}
+        />
+      </div>
       <br />
       <br />
 

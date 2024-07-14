@@ -1,12 +1,12 @@
-import "./App.css";
-import Form from "./Form";
+import React from 'react'
+import Form_validate_reset_msgOnSubmit from './forms/Form_validate_reset_msgOnSubmit'
 
 const App = () => {
   return (
     <>
-      <Form />
+      <Form_validate_reset_msgOnSubmit />
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
