@@ -8,9 +8,9 @@ export default function Practice() {
     handleSubmit,
     formState: { errors },
     reset,
-    getValues,
   } = useForm();
-  const [text, setText] = useState("");
+  const [currentValue, setCurrentValue] = useState("");
+  const [recordedValue, setRecordedValue] = useState(""); //shown on message box only when you click "Submit"
   const [isValid, setIsValid] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -21,7 +21,8 @@ export default function Practice() {
         onSubmit={handleSubmit(
           (data) => {
             console.log("success: ", data);
-            setIsValid(true)
+            setIsValid(true);
+            setRecordedValue(data.number)
           },
           (e) => {
             console.error("fail: ", e);
@@ -40,8 +41,10 @@ export default function Practice() {
             min: { value: 0, message: "number too short" },
             max: { value: 1000, message: "number too big" },
             onChange(event) {
-              //Note that whenever this onChange runs, it also causes re-rendering everytime just like clicking any button inside the <form> tags causes automatic form submission
-              setText(event.target.value);
+              //To access the current values of the fields only in the end, no need to declare a state var with currentValue, get it from getValues(). But for concurrenct updates, we use a separate state var
+              //OR you can concurrently run getValues() by causing re-rendering on every onChange for any reason
+              setCurrentValue(event.target.value)
+              //Note that whenever this onChange runs, it causes re-rendering. Also like clicking any button inside the <form> tags causes automatic form submission hence rerendering
             },
             onBlur(event) { //when input is focused or unfocused
               setIsFocused(!isFocused); //always set it to opposite of current boolean value
@@ -75,7 +78,7 @@ export default function Practice() {
 
       {isValid && (
         <div className="message-box lightgreen">
-          Recorded: {getValues("number")} {/* getValues accesses the currently recorded input data */}
+          Recorded: {recordedValue}
         </div>
       )}
 
@@ -83,7 +86,7 @@ export default function Practice() {
         {isFocused === false ? "Click on Number input box" : "Fill in a number"}
       </div>
 
-      {text && <div className="message-box lightgreen">Text: {text}</div>}
+      {currentValue && <div className="message-box lightgreen">Text: {currentValue}</div>}
     </div>
   );
 }
