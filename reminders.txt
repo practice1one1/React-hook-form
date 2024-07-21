@@ -1,0 +1,10 @@
+
+
+
+-------
+ABOUT ARRANGEMENT OF FILES IN THIS PROJECT:
+  The 'practice' folder has all notes and demo-code during learning.
+    Sub-folders have forms & notes with code specific to the topic as per the name of the folder eg '/register' has code about registering inputs with options and validation messages eg min, minLength, pattern... 
+    I practiced each aspect at codesandbox: https://codesandbox.io/p/sandbox/react-hook-form-prac-1-22rgsr?file=%2Fsrc%2FApp.tsx%3A25%2C1 and copied the final code into the practice folder here
+  The 'forms' folder has all the practice forms I have made while integrating numerous skills from react-hook-form as I learn them
+  When online, you'd better use codesanbox for quick prototyping and debugging. You can also start a local dev server if offline 
