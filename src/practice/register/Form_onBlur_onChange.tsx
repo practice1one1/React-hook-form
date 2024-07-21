@@ -10,7 +10,9 @@ export default function Practice() {
     reset,
     getValues,
   } = useForm();
+  const [text, setText] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className="App">
@@ -19,7 +21,7 @@ export default function Practice() {
         onSubmit={handleSubmit(
           (data) => {
             console.log("success: ", data);
-            setIsValid(true);
+            setIsValid(true)
           },
           (e) => {
             console.error("fail: ", e);
@@ -33,18 +35,24 @@ export default function Practice() {
         <input
           id="1"
           style={{ fontSize: "20px" }}
+          onClick={() => setIsFocused(true)}
           {...register("number", {
-            min: { value: -1, message: "number too short" },
+            min: { value: 0, message: "number too short" },
             max: { value: 1000, message: "number too big" },
-            setValueAs: (stringValue) => {
-              return "DRD-ISBN - 00" + stringValue; //eg to use custom comapny codes
+            onChange(event) {
+              //Note that whenever this onChange runs, it also causes re-rendering everytime just like clicking any button inside the <form> tags causes automatic form submission
+              setText(event.target.value);
+            },
+            onBlur(event) { //when input is focused or unfocused
+              setIsFocused(!isFocused); //always set it to opposite of current boolean value
             },
           })}
         />
         <br />
         <br />
 
-        <input className="button" type={"submit"} />
+        {/* <input className="button" type={"submit"} /> */}
+        <button className="button" type="submit">Submit</button>
       </form>
       <br />
 
@@ -67,9 +75,15 @@ export default function Practice() {
 
       {isValid && (
         <div className="message-box lightgreen">
-          Recorded: {getValues("number")}
+          Recorded: {getValues("number")} {/* getValues accesses the currently recorded input data */}
         </div>
       )}
+
+      <div className="message-box lightblue">
+        {isFocused === false ? "Click on Number input box" : "Fill in a number"}
+      </div>
+
+      {text && <div className="message-box lightgreen">Text: {text}</div>}
     </div>
   );
 }

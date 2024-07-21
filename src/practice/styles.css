@@ -1,0 +1,33 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.message-box {
+  border: 3px solid;
+  padding: 5px 10px;
+  margin: 3px;
+  font-size: smaller;
+}
+
+.red {
+  border-color: red;
+  color: red;
+}
+
+.lightgreen {
+  border-color: lightgreen;
+  color: lightgreen;
+}
+
+.lightblue {
+  border-color: lightskyblue;
+  color: lightskyblue;
+}
+
+.button {
+  font-size: 13px;
+  padding: 5px 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}

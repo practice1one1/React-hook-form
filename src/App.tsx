@@ -1,10 +1,9 @@
-import React from 'react'
-import Form_validate_reset_msgOnSubmit from './forms/Form_validate_reset_msgOnSubmit'
+import Form from './practice/register/Form_onBlur_onChange'
 
 const App = () => {
   return (
     <>
-      <Form_validate_reset_msgOnSubmit />
+      <Form />
     </>
   )
 }
