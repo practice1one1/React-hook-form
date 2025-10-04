@@ -8,12 +8,18 @@ export const ErrorsForm = () => {
     handleSubmit,
   } = useForm();
 
-  function onSubmitData(formData) {
+  function onValid(formData) {
     console.log(formData);
   }
 
+  function oninvalid(error) {
+    // triggers only when submitted. `error` has all the field names with their errors, as also accessed below eg errors["first-name"].message
+    console.error('Form is invalid: ', error);
+    // handle errors with appropraite UI updates to keep user informed
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmitData)}>
+    <form onSubmit={handleSubmit(onValid, oninvalid)}>
       <label>
         First Name:
         <input
