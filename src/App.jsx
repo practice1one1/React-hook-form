@@ -1,9 +1,9 @@
-import Form from './forms/register/Form_onBlur_onChange';
+import { ErrorsForm } from './forms/ErrorsForm';
 
 const App = () => {
   return (
     <>
-      <Form />
+      <ErrorsForm />
     </>
   );
 };
