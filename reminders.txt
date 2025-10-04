@@ -1,10 +1,114 @@
 
 
 
--------
-ABOUT ARRANGEMENT OF FILES IN THIS PROJECT:
-  The 'practice' folder has all notes and demo-code during learning.
-    Sub-folders have forms & notes with code specific to the topic as per the name of the folder eg '/register' has code about registering inputs with options and validation messages eg min, minLength, pattern... 
-    I practiced each aspect at codesandbox: https://codesandbox.io/p/sandbox/react-hook-form-prac-1-22rgsr?file=%2Fsrc%2FApp.tsx%3A25%2C1 and copied the final code into the practice folder here
-  The 'forms' folder has all the practice forms I have made while integrating numerous skills from react-hook-form as I learn them
-  When online, you'd better use codesanbox for quick prototyping and debugging. You can also start a local dev server if offline 
+
+
+-------------------
+Follow road map: https://chatgpt.com/c/68c84fcc-c26c-8327-be30-6680090a0e6c
+
+🔹 Step 1: Foundation
+
+👉 Focus on the essentials first (you already know some of this, but make sure the basics are solid).
+
+Concepts to master:
+
+useForm() → how it initializes the form (default values, mode).
+
+register() → wiring inputs to form state.
+
+handleSubmit() → handling form submission.
+
+Error handling → formState.errors.
+
+📌 Experiment:
+Build a simple login form (email + password). Add validation rules (required, minLength, pattern).
+
+        🔹 Step 2: Validation & Error Handling
+
+👉 Once you’re comfortable with the basics, dive deeper into validation.
+
+Concepts:
+
+Validation rules in register().
+
+Custom validation functions.
+
+Error messages.
+
+Resolver support (Yup, Zod, Joi).
+
+📌 Experiment:
+
+Add confirm-password validation.
+
+Use Yup or Zod with resolver to manage schema-based validation.
+
+🔹 Step 3: Controlled & Uncontrolled Inputs
+
+👉 RHF works best with uncontrolled inputs, but sometimes you’ll need controlled ones.
+
+Concepts:
+
+Controller component.
+
+Integration with UI libraries (Material UI, Chakra, etc).
+
+Handling custom components like date pickers or dropdowns.
+
+📌 Experiment:
+Use a 3rd-party UI input (e.g., a date picker) with Controller.
+
+🔹 Step 4: Advanced Form State & Features
+
+👉 Now you’ll explore features that make forms more dynamic.
+
+Concepts:
+
+watch() → dynamically react to values.
+
+setValue() / getValues() → manually update/read values.
+
+reset() → resetting form state.
+
+useFieldArray() → dynamic fields like add/remove items.
+
+useFormContext() + FormProvider → manage multi-step or deeply nested forms.
+
+📌 Experiment:
+
+Build a form with “Add more fields” functionality (like adding multiple addresses).
+
+Create a multi-step form (step 1: personal info, step 2: contact info, step 3: review & submit).
+
+🔹 Step 5: Performance & Best Practices
+
+👉 This is what sets RHF apart.
+
+Concepts:
+
+RHF avoids unnecessary re-renders — learn how.
+
+shouldUnregister vs keeping fields mounted.
+
+Optimizing with useController and form context.
+
+📌 Experiment:
+Build a large form and profile performance (use React DevTools to check renders).
+
+🔹 Step 6: Real-World Integration
+
+👉 Tie it all together with external APIs and user flows.
+
+Concepts:
+
+Submitting to backend APIs.
+
+Async validation (e.g., check if username is taken).
+
+Pre-filling forms with data (edit profile form).
+
+📌 Experiment:
+
+Create a signup form that checks username availability from an API before submission.
+
+Create an edit form that pre-fills data and allows updates.
