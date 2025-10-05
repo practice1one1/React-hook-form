@@ -23,7 +23,7 @@ Error handling → formState.errors.
 📌 Experiment:
 Build a simple login form (email + password). Add validation rules (required, minLength, pattern).
 
-        🔹 Step 2: Validation & Error Handling
+🔹 Step 2: Validation & Error Handling
 
 👉 Once you’re comfortable with the basics, dive deeper into validation.
 
@@ -31,7 +31,7 @@ Concepts:
 
 Validation rules in register().
 
-Custom validation functions.
+        Custom validation functions.
 
 Error messages.
 

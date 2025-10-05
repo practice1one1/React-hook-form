@@ -31,3 +31,8 @@ form * {
   margin: 10px 0px;
   width: 100%;
 }
+
+/* all elements disaplying alert/error messages */
+p[role='alert'] {
+  color: #ff6b6b;
+}

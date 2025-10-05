@@ -1,0 +1,5 @@
+/* overriding styles in AllForms.css, so make selectors more 'specific' */
+form input[type='checkbox'],
+form label {
+  display: inline-block;
+}
