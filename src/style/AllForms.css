@@ -3,6 +3,13 @@ body {
   justify-content: center;
 }
 
+form * {
+  display: block;
+  margin: 1em;
+  border: 1px solid #ff00bf;
+}
+
+/* extra positionsing/styling options as classnames */
 .container {
   /* padding: "100px 200px"; */
   border-radius: 6%;
@@ -12,10 +19,6 @@ body {
   justify-content: center;
 }
 
-.x {
-  background-color: red;
-}
-
 .center {
   display: flex;
   align-items: center;
@@ -23,8 +26,8 @@ body {
 }
 
 .input {
-  font-size: "15px";
-  padding: "5px 10px";
+  font-size: '15px';
+  padding: '5px 10px';
   margin: 10px 0px;
   width: 100%;
 }

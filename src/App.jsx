@@ -1,11 +1,13 @@
 import { ErrorsForm } from './forms/ErrorsForm';
-import { GetValuesForm } from './forms/GetValuesForm';
-import { WatchForm } from './forms/WatchForm';
+import { ExptForm } from './forms/ExptForm';
+import { ReadOnlyDisabledForm } from './forms/ReadOnlyDisabledForm';
+import { ShouldUnregisterForm } from './forms/ShouldUnregisterForm';
+import './style/AllForms.css';
 
 const App = () => {
   return (
     <>
-      <GetValuesForm />
+      <ShouldUnregisterForm />
     </>
   );
 };
