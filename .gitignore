@@ -23,4 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
+# custom files to ignore
 src/forms/ExptForm.jsx
+src/forms/ZodExptForm.jsx

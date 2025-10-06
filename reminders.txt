@@ -1,3 +1,14 @@
+prac concepts to include:
+  z.string().trim().regex()
+  z.number()
+  z.literal()
+  z.union([])
+  z.emoji() - customer satisfaction
+  z.email()
+  z.httpUrl({hostname: /^facebook\.com$/}) - fb a/c
+
+  safeParse() & if else wiht result.success check
+
 
 
 
@@ -31,11 +42,11 @@ Concepts:
 
 Validation rules in register().
 
-        Custom validation functions.
+Custom validation functions.
 
 Error messages.
 
-Resolver support (Yup, Zod, Joi).
+        Resolver support (Yup, Zod, Joi).
 
 📌 Experiment:
 
