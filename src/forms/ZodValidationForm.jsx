@@ -2,24 +2,21 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import '../style/ZodValidationForm.css';
 
 const schema = z.object({
   personal: z.object({
-    name: z.string().trim().min(2, 'Name must be at least 2 characters'),
-    age: z
-      .number('Please enter a valid age number')
-      .gte(18, 'Must be 18 or older')
-      .optional(),
+    name: z.string().trim().min(2),
+    age: z.number().gte(18).optional(),
   }),
   company: z.object({
-    employeeId: z.string().regex(/^VVS-/, 'Employee ID must start with VVS-'),
-    position: z.enum(
-      ['Director', 'Manager', 'Worker'],
-      'Position is either Director, Manager or Worker'
-    ),
+    employeeId: z.union([z.string().regex(/^VVS-/), z.string().regex(/^CCP-/)]), // OR combine regexes: employeeId: z.string().regex(/^(?:VVS-|CCP-)/),
+    position: z.literal(['Director', 'Manager', 'Worker']),
+  }),
+  customer: z.object({
+    rating: z.literal(['good', 'average', 'bad']),
   }),
 });
-
 export const ZodValidationForm = () => {
   const {
     register,
@@ -27,8 +24,8 @@ export const ZodValidationForm = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    mode: 'onChange', // revalidtes on every input
-    reValidateMode: 'onBlur', // revalidates also upon input losing focus
+    // mode: 'onChange', // revalidtes on every input otherwise runs only upon submit
+    // reValidateMode: 'onBlur', // revalidates also upon input losing focus
   });
 
   return (
@@ -72,32 +69,66 @@ export const ZodValidationForm = () => {
         <div>
           Position:
           <label>
-            Director
             <input
               type='radio'
               {...register('company.position')}
               value={'Director'}
             />
+            Director
           </label>
           <label>
-            Manager
             <input
               type='radio'
               {...register('company.position')}
               value={'Manager'}
             />
+            Manager
           </label>
           <label>
-            Worker
             <input
               type='radio'
               {...register('company.position')}
               value={'Worker'}
             />
+            Worker
           </label>
         </div>
         {errors.company?.position && (
           <p role='alert'>{errors.company?.position.message}</p>
+        )}
+      </fieldset>
+
+      <fieldset>
+        <legend>Customer related</legend>
+        <div>
+          Rating:
+          <label>
+            🙂
+            <input
+              type='radio'
+              {...register('customer.rating')}
+              value={'good'}
+            />
+          </label>
+          <label>
+            😑
+            <input
+              type='radio'
+              {...register('customer.rating')}
+              value={'average'}
+            />
+          </label>
+          <label>
+            🙁
+            <input
+              type='radio'
+              {...register('customer.rating')}
+              value={'bad'}
+            />
+          </label>
+        </div>
+        {errors.customer?.rating && (
+          <p role='alert'>{errors.customer.rating.message}</p>
         )}
       </fieldset>
 
