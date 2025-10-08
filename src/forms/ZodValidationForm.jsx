@@ -5,16 +5,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import '../style/ZodValidationForm.css';
 
 const schema = z.object({
-  personal: z.object({
-    name: z.string().trim().min(2),
-    age: z.number().gte(18).optional(),
-  }),
+  // personal: z.object({
+  //   name: z.string().trim().min(2).optional(),
+  //   age: z.number().gte(18).optional(),
+  // }),
   company: z.object({
-    employeeId: z.union([z.string().regex(/^VVS-/), z.string().regex(/^CCP-/)]), // OR combine regexes: employeeId: z.string().regex(/^(?:VVS-|CCP-)/),
-    position: z.literal(['Director', 'Manager', 'Worker']),
+    // employeeId: z
+    //   .union([z.string().regex(/^VVS-/), z.string().regex(/^CCP-/)])
+    //   .optional(), // OR combine regexes: employeeId: z.string().regex(/^(?:VVS-|CCP-)/),
+    employeeId2: z.union([z.string(), z.number()]).optional(),
+    // position: z.literal(['Director', 'Manager', 'Worker']).optional(),
   }),
   customer: z.object({
-    rating: z.literal(['good', 'average', 'bad']),
+    rating: z.emoji().optional(),
   }),
 });
 export const ZodValidationForm = () => {
@@ -66,6 +69,20 @@ export const ZodValidationForm = () => {
           <p role='alert'>{errors.company?.employeeId.message}</p>
         )}
 
+        <label>
+          Employee ID 2:
+          <input
+            type='text'
+            {...register('company.employeeId2', {
+              setValueAs: (data) =>
+                Number.isNaN(Number(data)) ? String(data) : Number(data), // employeeId2 is either a string or number. I avoided {setValueAsNumber: true} because it could return NaN if a string is passed
+            })}
+          />
+        </label>
+        {errors.company?.employeeId2 && (
+          <p role='alert'>{errors.company?.employeeId2.message}</p>
+        )}
+
         <div>
           Position:
           <label>
@@ -104,27 +121,15 @@ export const ZodValidationForm = () => {
           Rating:
           <label>
             🙂
-            <input
-              type='radio'
-              {...register('customer.rating')}
-              value={'good'}
-            />
+            <input type='radio' {...register('customer.rating')} value={'🙂'} />
           </label>
           <label>
             😑
-            <input
-              type='radio'
-              {...register('customer.rating')}
-              value={'average'}
-            />
+            <input type='radio' {...register('customer.rating')} value={'😑'} />
           </label>
           <label>
             🙁
-            <input
-              type='radio'
-              {...register('customer.rating')}
-              value={'bad'}
-            />
+            <input type='radio' {...register('customer.rating')} value={'🙁'} />
           </label>
         </div>
         {errors.customer?.rating && (
