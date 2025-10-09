@@ -9,15 +9,31 @@ const schema = z.object({
   //   name: z.string().trim().min(2).optional(),
   //   age: z.number().gte(18).optional(),
   // }),
-  company: z.object({
-    // employeeId: z
-    //   .union([z.string().regex(/^VVS-/), z.string().regex(/^CCP-/)])
-    //   .optional(), // OR combine regexes: employeeId: z.string().regex(/^(?:VVS-|CCP-)/),
-    employeeId2: z.union([z.string(), z.number()]).optional(),
-    // position: z.literal(['Director', 'Manager', 'Worker']).optional(),
-  }),
+  // company: z.object({
+  // employeeId: z
+  //   .union([z.string().regex(/^VVS-/), z.string().regex(/^CCP-/)])
+  //   .optional(), // OR combine regexes: employeeId: z.string().regex(/^(?:VVS-|CCP-)/),
+  // employeeId2: z.union([z.string(), z.number()]).optional(),
+  // position: z.literal(['Director', 'Manager', 'Worker']).optional(),
+  // }),
   customer: z.object({
-    rating: z.emoji().optional(),
+    //   rating: z.emoji().optional(),
+    email: z.email(),
+    facebookAC: z.url().refine(
+      (val) => {
+        // using .refine() along with .url() seems to skip URL validation in z.url(). Hence wrap in a try...catch since invalid url may be passed to new URL() which may throw
+        try {
+          const url = new URL(val);
+          return (
+            url.hostname === 'facebook.com' ||
+            url.hostname.endsWith('.facebook.com')
+          );
+        } catch (err) {
+          return false;
+        }
+      }
+      // { error: 'Improper FB url!', abort: true }
+    ),
   }),
 });
 export const ZodValidationForm = () => {
@@ -33,7 +49,6 @@ export const ZodValidationForm = () => {
 
   return (
     <form onSubmit={handleSubmit((d) => console.log(d))}>
-      <pre>{JSON.stringify(errors, null, 2)}</pre>
       <fieldset>
         <legend>Personal details</legend>
         <label>
@@ -135,6 +150,16 @@ export const ZodValidationForm = () => {
         {errors.customer?.rating && (
           <p role='alert'>{errors.customer.rating.message}</p>
         )}
+
+        <label>
+          Email Address:
+          <input type='email' {...register('customer.email')} />
+        </label>
+
+        <label>
+          Facebook (Optional):
+          <input type='text' {...register('customer.facebookAC')} />
+        </label>
       </fieldset>
 
       <input type='submit' />
