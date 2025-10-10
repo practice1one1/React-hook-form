@@ -1,3 +1,7 @@
+form {
+  min-width: 50vw;
+}
+
 input[type='radio'] {
   display: inline-block;
 }
