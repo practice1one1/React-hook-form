@@ -11,6 +11,7 @@ const schema = z.object({
     .min(2, 'Name should have atleast 2 characters')
     .min(1, { error: 'User ID is mandatory' }),
   //same as .nonempty({ error: 'User ID is mandatory' }),
+  // Always keep .nonempty() at end
   password: z.string().nonempty('Password is required'),
 });
 

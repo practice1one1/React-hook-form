@@ -1,12 +1,12 @@
 // import { ZodExptForm } from './forms/ZodExptForm';
 // import { ExptForm } from './forms/ExptForm';
-import { ZodValidationSequenceForm } from './forms/ZodValidationSequenceForm';
+import { ZodRefineForm } from './forms/ZodRefineForm';
 import './style/AllForms.css';
 
 const App = () => {
   return (
     <>
-      <ZodValidationSequenceForm />
+      <ZodRefineForm />
       {/* <ZodExptForm /> */}
       {/* <ExptForm /> */}
     </>
