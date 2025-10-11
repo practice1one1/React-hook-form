@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { customZodResolver } from '../utils/customZodResolver';
 import 'react-datepicker/dist/react-datepicker.css';
+
+const schema = z.object({
+  dateOfBirth: z.date({ error: 'Please enter a valid date' }).refine(
+    (inputDate) => {
+      const today = new Date();
+      return today.getFullYear() - inputDate.getFullYear() >= 18;
+    },
+    {
+      error: 'You are too young to register',
+    }
+  ),
+});
 
 export const ControllerDatePickerForm = () => {
   const { control, handleSubmit, watch } = useForm({
+    resolver: customZodResolver(schema),
     defaultValues: {
       dateOfBirth: new Date(),
     },
@@ -21,16 +36,6 @@ export const ControllerDatePickerForm = () => {
         <Controller
           name='dateOfBirth'
           control={control}
-          rules={{
-            required: 'Date of birth is mandatory',
-            validate(inputDate) {
-              const today = new Date();
-              return (
-                today.getFullYear() - inputDate.getFullYear() >= 18 ||
-                'You are too young to register'
-              );
-            },
-          }}
           render={({ field: { onChange, ref, value, onBlur }, fieldState }) => {
             return (
               <div>
