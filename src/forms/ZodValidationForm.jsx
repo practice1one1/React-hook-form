@@ -39,21 +39,21 @@ const schema = z.object({
       },
     }),
     // email: z.email(),
-    facebookAC: z.url().refine(
-      (val) => {
-        // using .refine() along with .url() seems to skip URL validation in z.url(). Hence wrap in a try...catch since invalid url may be passed to new URL() which may throw
-        try {
-          const url = new URL(val);
-          return (
-            url.hostname === 'facebook.com' ||
-            url.hostname.endsWith('.facebook.com')
-          );
-        } catch (err) {
-          return false;
-        }
-      },
-      { error: 'Improper FB url!', abort: true } // using abort runs no more error map functions
-    ),
+    // facebookAC: z.url().refine(
+    //   (val) => {
+    //     // using .refine() along with .url() seems to skip URL validation in z.url(). Hence wrap in a try...catch since invalid url may be passed to new URL() which may throw
+    //     try {
+    //       const url = new URL(val);
+    //       return (
+    //         url.hostname === 'facebook.com' ||
+    //         url.hostname.endsWith('.facebook.com')
+    //       );
+    //     } catch (err) {
+    //       return false;
+    //     }
+    //   },
+    //   { error: 'Improper FB url!', abort: true } // using abort runs no more error map functions
+    // ),
   }),
 });
 export const ZodValidationForm = () => {
@@ -75,8 +75,13 @@ export const ZodValidationForm = () => {
           Name:
           <input type='text' {...register('personal.name')} />
         </label>
-        {errors.personal?.name && (
-          <p role='alert'>{errors.personal?.name.message}</p>
+        {/* I am not accessing `errors.personal.name` because the custom resolver
+        sets the error objects with keys eg 'personal.name' string, instead of
+        nesting the error objects. Either access errors by
+        errors["personal.name"].message or modify the custom resolver to nest
+        error objects */}
+        {errors['personal.name'] && (
+          <p role='alert'>{errors['personal.name'].message}</p>
         )}
 
         <label>
@@ -89,8 +94,8 @@ export const ZodValidationForm = () => {
             })}
           />
         </label>
-        {errors.personal?.age && (
-          <p role='alert'>{errors.personal?.age.message}</p>
+        {errors['personal.age'] && (
+          <p role='alert'>{errors['personal.age'].message}</p>
         )}
       </fieldset>
 
@@ -100,8 +105,8 @@ export const ZodValidationForm = () => {
           Employee ID:
           <input type='text' {...register('company.employeeId')} />
         </label>
-        {errors.company?.employeeId && (
-          <p role='alert'>{errors.company?.employeeId.message}</p>
+        {errors['company.employeeId'] && (
+          <p role='alert'>{errors['company.employeeId'].message}</p>
         )}
 
         <label>
@@ -114,8 +119,8 @@ export const ZodValidationForm = () => {
             })}
           />
         </label>
-        {errors.company?.employeeId2 && (
-          <p role='alert'>{errors.company?.employeeId2.message}</p>
+        {errors['company.employeeId2'] && (
+          <p role='alert'>{errors['company.employeeId2'].message}</p>
         )}
 
         <div>
@@ -145,8 +150,8 @@ export const ZodValidationForm = () => {
             Worker
           </label>
         </div>
-        {errors.company?.position && (
-          <p role='alert'>{errors.company?.position.message}</p>
+        {errors['company.position'] && (
+          <p role='alert'>{errors['company.position'].message}</p>
         )}
       </fieldset>
 
@@ -167,8 +172,8 @@ export const ZodValidationForm = () => {
             <input type='radio' {...register('customer.rating')} value={'🙁'} />
           </label>
         </div>
-        {errors.customer?.rating && (
-          <p role='alert'>{errors.customer.rating.message}</p>
+        {errors['customer.rating'] && (
+          <p role='alert'>{errors['customer.rating'].message}</p>
         )}
 
         <label>
@@ -178,24 +183,24 @@ export const ZodValidationForm = () => {
             {...register('customer.rating2', { valueAsNumber: true })}
           />
         </label>
-        {errors.customer?.rating2 && (
-          <p role='alert'>{errors.customer.rating2.message}</p>
+        {errors['customer.rating2'] && (
+          <p role='alert'>{errors['customer.rating2'].message}</p>
         )}
 
         <label>
           Email Address:
           <input type='email' {...register('customer.email')} />
         </label>
-        {errors.customer?.email && (
-          <p role='alert'>{errors.customer.email.message}</p>
+        {errors['customer.email'] && (
+          <p role='alert'>{errors['customer.email'].message}</p>
         )}
 
         <label>
           Facebook (Optional):
           <input type='text' {...register('customer.facebookAC')} />
         </label>
-        {errors.customer?.facebookAC && (
-          <p role='alert'>{errors.customer.facebookAC.message}</p>
+        {errors['customer.facebookAC'] && (
+          <p role='alert'>{errors['customer.facebookAC'].message}</p>
         )}
       </fieldset>
 
