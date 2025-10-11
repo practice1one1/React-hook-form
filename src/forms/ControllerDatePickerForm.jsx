@@ -33,20 +33,23 @@ export const ControllerDatePickerForm = () => {
           }}
           render={({ field: { onChange, ref, value, onBlur }, fieldState }) => {
             return (
-              <>
+              <div>
                 <ReactDatePicker
                   selected={value}
                   onChange={onChange}
                   onBlur={onBlur}
-                  ref={ref}
+                  // ref={ref} // this is a ref to the wrapper around the input inside ReactDatePicker
+                  customInputRef={ref} // this a ref to the actual date input within. ⚠️This is silently throwing a DOM error about some prop/method/attribute being passed to the native <input> by hook form, that it doesn't recognize
                 />
                 {fieldState.error && (
                   <p role='alert'>{fieldState.error.message}</p>
                 )}
-              </>
+              </div>
             );
           }}
         />
+
+        <input type='submit' />
       </form>
 
       {dateOfBirth && <p>Selected date is: {dateOfBirth.toDateString()}</p>}
