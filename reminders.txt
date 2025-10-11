@@ -50,7 +50,7 @@ Resolver support (Yup, Zod, Joi).
 
 📌 Experiment:
 
-    Add confirm-password validation. (with Zod)
+Add confirm-password validation. (with Zod)
 
 Use Yup or Zod with resolver to manage schema-based validation.
 
@@ -60,7 +60,7 @@ Use Yup or Zod with resolver to manage schema-based validation.
 
 Concepts:
 
-Controller component.
+    Controller component.
 
 Integration with UI libraries (Material UI, Chakra, etc).
 
