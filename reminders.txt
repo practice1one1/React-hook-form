@@ -46,11 +46,11 @@ Custom validation functions.
 
 Error messages.
 
-        Resolver support (Yup, Zod, Joi).
+Resolver support (Yup, Zod, Joi).
 
 📌 Experiment:
 
-Add confirm-password validation.
+      Add confirm-password validation.
 
 Use Yup or Zod with resolver to manage schema-based validation.
 
