@@ -63,8 +63,9 @@ export const ZodValidationForm = () => {
     formState: { errors },
   } = useForm({
     resolver: customZodResolver(schema),
-    mode: 'onChange', // revalidtes on every input otherwise runs only upon submit
-    reValidateMode: 'onBlur', // revalidates also upon input losing focus
+    // mode: 'onChange', // default "onSubmit". Defines validation sequence before submit
+    // reValidateMode: 'onChange', // default "onChange". Defines validation sequence after submit (when errors appear)
+    // By default validation runs initially upon submit then on each input
   });
 
   return (
