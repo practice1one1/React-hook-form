@@ -21,14 +21,29 @@ export const ControllerDatePickerForm = () => {
         <Controller
           name='dateOfBirth'
           control={control}
-          render={({ field: { onChange, ref, value, onBlur } }) => {
+          rules={{
+            required: 'Date of birth is mandatory',
+            validate(inputDate) {
+              const today = new Date();
+              return (
+                today.getFullYear() - inputDate.getFullYear() >= 18 ||
+                'You are too young to register'
+              );
+            },
+          }}
+          render={({ field: { onChange, ref, value, onBlur }, fieldState }) => {
             return (
-              <ReactDatePicker
-                selected={value}
-                onChange={onChange}
-                onBlur={onBlur}
-                ref={ref}
-              />
+              <>
+                <ReactDatePicker
+                  selected={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+                {fieldState.error && (
+                  <p role='alert'>{fieldState.error.message}</p>
+                )}
+              </>
             );
           }}
         />
