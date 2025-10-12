@@ -1,12 +1,12 @@
 // import { ZodExptForm } from './forms/ZodExptForm';
 // import { ExptForm } from './forms/ExptForm';
-import { ControllerDatePickerForm } from './forms/ControllerDatePickerForm';
+import { ControllerSelectForm } from './forms/ControllerSelectForm';
 import './style/AllForms.css';
 
 const App = () => {
   return (
     <>
-      <ControllerDatePickerForm />
+      <ControllerSelectForm />
       {/* <ZodExptForm /> */}
       {/* <ExptForm /> */}
     </>

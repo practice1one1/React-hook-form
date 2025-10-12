@@ -60,7 +60,7 @@ Use Yup or Zod with resolver to manage schema-based validation.
 
 Concepts:
 
-    Controller component.
+Controller component.
 
 Integration with UI libraries (Material UI, Chakra, etc).
 
