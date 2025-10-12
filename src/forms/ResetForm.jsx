@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { getResetDataFromAPI } from '../../mocks/getResetDataFromAPI';
 
 export const ResetForm = () => {
   const {
@@ -10,9 +11,10 @@ export const ResetForm = () => {
     reset,
   } = useForm();
 
-  // console.log('Field vals:', watch());
-  console.log('Touched fields:', touchedFields);
-  console.log('Dirty fields:', dirtyFields);
+  const resetFormAsync = useCallback(async () => {
+    const valuesToResetWith = await getResetDataFromAPI();
+    reset(valuesToResetWith);
+  });
 
   return (
     <>
@@ -27,15 +29,10 @@ export const ResetForm = () => {
 
         <button
           type='button'
-          onClick={() => reset()} // resets the field values to {}
-          // onClick={() => reset({field1: "new default field1"})} // resets the field values state to only contain a "new" "field1" field alone
-          // onClick={() => // this practically does "no usefull reset" as it keeps almost everything
-          //   reset((fieldVals) => ({ ...fieldVals }), {
-          //     keepTouched: true,
-          //     keepDirty: true,
-          //   })
-          // }
-          //
+          onClick={() =>
+            // can also call resetFormAsync() insided a useEffect(). Make sure the useEffect()s inside useForm() finish running before you reset the form. Here, the user is guaranteed to click this button (to reset the form) after useEffect()s have been called (happens quickly on render)
+            resetFormAsync()
+          }
         >
           Reset...
         </button>
