@@ -64,7 +64,7 @@ Controller component.
 
 Integration with UI libraries (Material UI, Chakra, etc).
 
-    Handling custom components like date pickers or dropdowns.
+Handling custom components like date pickers or dropdowns.
 
 📌 Experiment:
 Use a 3rd-party UI input (e.g., a date picker) with Controller.
