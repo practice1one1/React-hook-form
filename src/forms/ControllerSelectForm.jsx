@@ -1,12 +1,39 @@
 import React, { useState } from 'react';
 import ReactSelect from 'react-select';
-import { formatError } from 'zod';
+import * as z from 'zod';
 import {
   colorOptions,
   flavourOptions,
   groupedOptions,
 } from '../data/ReactSelectOptions';
 import { Controller, useForm } from 'react-hook-form';
+import { customZodResolver } from '../utils/customZodResolver';
+
+const schema = z.object({
+  colorsOrFlavours: z.object(
+    {
+      label: z.string().refine(
+        (label) => {
+          const isPresentInColors = colorOptions.find((o) => o.label === label);
+          const isPresentInFlavours = flavourOptions.find(
+            (o) => o.label === label
+          );
+          return isPresentInColors || isPresentInFlavours;
+        },
+        { error: 'Invalid option', abort: true } // abort flag prevents further validation checks if this first one fails
+      ),
+      value: z.literal(['red', 'blue', 'green', 'yellow']),
+      isDisabled: z.boolean().optional(),
+      isFixed: z.boolean().optional(),
+      rating: z
+        .number()
+        .min(0, 'Please provide a rating between 0 and 1')
+        .max(1, 'Please provide a rating between 0 and 1')
+        .optional(),
+    },
+    { error: 'Please select an option' }
+  ),
+});
 
 // styles for each group's label:
 const formatGroupLabel = (groupedData) => (
@@ -39,6 +66,7 @@ export const ControllerSelectForm = () => {
     defaultValues: {
       colorsOrFlavours: colorOptions[3],
     },
+    resolver: customZodResolver(schema),
   });
 
   return (
@@ -51,18 +79,6 @@ export const ControllerSelectForm = () => {
       <Controller
         name='colorsOrFlavours'
         control={control}
-        rules={{
-          required: 'Please select an option',
-          validate: (selectedOption) => {
-            const isPresentInColors = colorOptions.find(
-              (o) => o.value === selectedOption.value
-            );
-            const isPresentInFlavours = flavourOptions.find(
-              (o) => o.value === selectedOption.value
-            );
-            return isPresentInColors || isPresentInFlavours || 'Invalid option';
-          },
-        }}
         render={({ field, fieldState }) => {
           return (
             <>
