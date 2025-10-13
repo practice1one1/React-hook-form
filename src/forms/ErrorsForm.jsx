@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export const ErrorsForm = () => {
   const {
@@ -14,7 +14,7 @@ export const ErrorsForm = () => {
 
   function oninvalid(error) {
     // triggers only when submitted. `error` has all the field names with their errors, as also accessed below eg errors["first-name"].message
-    console.error('Form is invalid: ', error);
+    console.error("Form is invalid: ", error);
     // handle errors with appropraite UI updates to keep user informed
   }
 
@@ -23,17 +23,17 @@ export const ErrorsForm = () => {
       <label>
         First Name:
         <input
-          {...register('first-name', {
-            required: { value: true, message: 'First name is required!' },
+          {...register("first-name", {
+            required: { value: true, message: "First name is required!" },
           })}
-          aria-invalid={errors['first-name'] ? true : false}
+          aria-invalid={errors["first-name"] ? true : false}
         />
-        {errors['first-name']?.type === 'required' && (
-          <p role='alert'>{errors['first-name'].message}</p>
+        {errors["first-name"]?.type === "required" && (
+          <p role="alert">{errors["first-name"].message}</p>
         )}
       </label>
 
-      <input type='submit' value='Submit' />
+      <input type="submit" value="Submit" />
     </form>
   );
 };

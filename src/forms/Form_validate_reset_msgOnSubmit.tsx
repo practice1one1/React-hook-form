@@ -5,11 +5,11 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import "../allForms.css"
+import "../allForms.css";
 
 interface FormValues {
   password: string;
-  confirmPassword: string
+  confirmPassword: string;
 }
 
 export default function Form_validate_reset_msgOnSubmit() {
@@ -24,16 +24,18 @@ export default function Form_validate_reset_msgOnSubmit() {
   return (
     <div className="container">
       <h2 className="">React Hook Form Practice 1</h2>
-      <form className="container" onSubmit={handleSubmit(
-        (data) => {
-          console.log("success: ", data);
-          setIsValid(true);
-        },
-        (e) => {
-          console.error("fail: ", e);
-          setIsValid(false);
-        }
-      )}
+      <form
+        className="container"
+        onSubmit={handleSubmit(
+          (data) => {
+            console.log("success: ", data);
+            setIsValid(true);
+          },
+          (e) => {
+            console.error("fail: ", e);
+            setIsValid(false);
+          },
+        )}
       >
         <input
           {...register("password", {
@@ -50,17 +52,16 @@ export default function Form_validate_reset_msgOnSubmit() {
           {...register("confirmPassword", {
             validate: {
               isSame: (v, values) => {
-                return (values.password && values.password === v) || "Not the same";
+                return (
+                  (values.password && values.password === v) || "Not the same"
+                );
               },
             },
           })}
         />
         <br />
         <br />
-        <input
-          className="input"
-          type={"submit"}
-        />
+        <input className="input" type={"submit"} />
       </form>
 
       <div style={{ padding: "0px 12px", width: "100%" }}>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import '../style/basicForm.css';
+import React from "react";
+import { useForm } from "react-hook-form";
+import "../style/basicForm.css";
 
 const BasicForm = () => {
   const {
@@ -21,8 +21,8 @@ const BasicForm = () => {
         <label>
           Name:
           <input
-            {...register('name', {
-              required: { value: true, message: 'This field is required' },
+            {...register("name", {
+              required: { value: true, message: "This field is required" },
             })}
           />
         </label>
@@ -30,11 +30,11 @@ const BasicForm = () => {
         <label>
           Age:
           <input
-            type='number'
-            {...register('age', {
+            type="number"
+            {...register("age", {
               valueAsNumber: true,
               min: { value: 1, message: "Age can't be less than 1 year" },
-              max: { value: 100, message: 'Age above 100 years is overlooked' },
+              max: { value: 100, message: "Age above 100 years is overlooked" },
             })}
           />
         </label>
@@ -46,12 +46,12 @@ const BasicForm = () => {
         <label>
           Email:
           <input
-            type='email'
-            {...register('email', {
-              required: { value: true, message: 'Please provide an email!' },
+            type="email"
+            {...register("email", {
+              required: { value: true, message: "Please provide an email!" },
               pattern: {
                 value: /dsorg/,
-                message: 'Please provide your LAN/locally used email',
+                message: "Please provide your LAN/locally used email",
               },
             })}
           />
@@ -59,7 +59,7 @@ const BasicForm = () => {
         {errors.email && <p>{errors.email.message}</p>}
       </fieldset>
 
-      <input type='submit' value='Submit' />
+      <input type="submit" value="Submit" />
     </form>
   );
 };

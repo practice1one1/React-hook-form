@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export const SetValueForm = () => {
   const {
@@ -10,7 +10,7 @@ export const SetValueForm = () => {
     watch,
   } = useForm();
 
-  const [firstname, lastname] = watch(['name.firstname', 'name.lastname']);
+  const [firstname, lastname] = watch(["name.firstname", "name.lastname"]);
 
   // console.count('rendered');
 
@@ -20,42 +20,42 @@ export const SetValueForm = () => {
       {/* <pre>{JSON.stringify(dirtyFields, null, 2)}</pre> */}
       <form
         onSubmit={handleSubmit(
-          (d) => console.log('Submitted', d),
-          (err) => console.error('Submit error:', err)
+          (d) => console.log("Submitted", d),
+          (err) => console.error("Submit error:", err),
         )}
       >
         <input
-          type='text'
-          {...register('name.firstname', {
+          type="text"
+          {...register("name.firstname", {
             minLength: {
               value: 2,
-              message: 'Please inlcude at least 2 characters',
+              message: "Please inlcude at least 2 characters",
             },
           })}
         />
         <input
-          type='text'
-          {...register('name.lastname', {
+          type="text"
+          {...register("name.lastname", {
             minLength: {
               value: 2,
-              message: 'Please inlcude at least 2 characters',
+              message: "Please inlcude at least 2 characters",
             },
           })}
         />
         <input
-          type='text'
-          {...register('name.fullname', {
+          type="text"
+          {...register("name.fullname", {
             validate: (fullnameInput, allInputs) =>
               (fullnameInput.includes(allInputs.name.firstname) &&
                 fullnameInput.includes(allInputs.name.lastname)) ||
-              'Fullname does not match first and last names',
+              "Fullname does not match first and last names",
           })}
         />
 
         <button
-          type='button'
+          type="button"
           onClick={() =>
-            setValue('name.fullname', `${firstname} ${lastname}`, {
+            setValue("name.fullname", `${firstname} ${lastname}`, {
               // all parameters default: false
               shouldValidate: true,
               shouldTouch: true,
@@ -66,7 +66,7 @@ export const SetValueForm = () => {
           Guess Fullname
         </button>
 
-        <input type='submit' />
+        <input type="submit" />
       </form>
     </>
   );

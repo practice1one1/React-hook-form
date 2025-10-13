@@ -26,13 +26,13 @@ form * {
 }
 
 .input {
-  font-size: '15px';
-  padding: '5px 10px';
+  font-size: "15px";
+  padding: "5px 10px";
   margin: 10px 0px;
   width: 100%;
 }
 
 /* all elements disaplying alert/error messages */
-p[role='alert'] {
+p[role="alert"] {
   color: #ff6b6b;
 }

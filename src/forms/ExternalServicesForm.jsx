@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, useForm } from 'react-hook-form';
+import React from "react";
+import { Form, useForm } from "react-hook-form";
 
 export const ExternalServicesForm = () => {
   const { register, handleSubmit, control } = useForm();
@@ -40,18 +40,18 @@ export const ExternalServicesForm = () => {
   // Using <Form> (BETA) to handle posting to external service efficiently instead of handleSubmit
   return (
     <Form
-      action='/api' // proxying reqs through vite dev server
+      action="/api" // proxying reqs through vite dev server
       control={control}
-      onSuccess={(resp) => console.log('Submission successful', resp)}
-      onError={(resp) => console.log('Submission failed', resp)}
+      onSuccess={(resp) => console.log("Submission successful", resp)}
+      onError={(resp) => console.log("Submission failed", resp)}
     >
-      <input {...register('name')} />
+      <input {...register("name")} />
       <input
-        type='email'
-        {...register('email', {
+        type="email"
+        {...register("email", {
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            message: 'Please enter a valid email!',
+            message: "Please enter a valid email!",
           },
         })}
       />

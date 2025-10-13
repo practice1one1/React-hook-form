@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useCallback } from "react";
+import { useForm } from "react-hook-form";
 
 export const ResetForm = () => {
   const {
@@ -10,16 +10,16 @@ export const ResetForm = () => {
     watch,
   } = useForm({
     defaultValues: {
-      name: '',
-      email: '',
-      address: 'Plot 1, Garden road',
+      name: "",
+      email: "",
+      address: "Plot 1, Garden road",
     },
   });
 
-  console.log('Field values:', watch());
-  console.log('%cTouched fields', 'color: lightblue', touchedFields);
-  console.log('%cDirty fields', 'color: yellow', dirtyFields);
-  console.log('%cError fields', 'color: red', errors);
+  console.log("Field values:", watch());
+  console.log("%cTouched fields", "color: lightblue", touchedFields);
+  console.log("%cDirty fields", "color: yellow", dirtyFields);
+  console.log("%cError fields", "color: red", errors);
 
   const handleResetErrorFields = useCallback(() => {
     Object.keys(errors).forEach((errorField) => {
@@ -34,50 +34,50 @@ export const ResetForm = () => {
     <>
       <form
         onSubmit={handleSubmit(
-          (d) => console.log('Submitted', d),
-          (err) => console.error('Submit error:', err)
+          (d) => console.log("Submitted", d),
+          (err) => console.error("Submit error:", err),
         )}
       >
         <input
-          type='text'
-          placeholder='Name'
-          {...register('name', {
-            required: 'Name is required',
+          type="text"
+          placeholder="Name"
+          {...register("name", {
+            required: "Name is required",
             minLength: {
               value: 2,
-              message: 'Please enter at least 2 characters',
+              message: "Please enter at least 2 characters",
             },
           })}
         />
-        {errors.name && <p role='alert'>{errors.name.message}</p>}
+        {errors.name && <p role="alert">{errors.name.message}</p>}
 
         <input
-          type='text'
-          placeholder='Email'
-          {...register('email', {
-            pattern: { value: /@/, message: 'Please enter a valid email' },
+          type="text"
+          placeholder="Email"
+          {...register("email", {
+            pattern: { value: /@/, message: "Please enter a valid email" },
           })}
         />
-        {errors.email && <p role='alert'>{errors.email.message}</p>}
+        {errors.email && <p role="alert">{errors.email.message}</p>}
 
         <input
-          type='text'
-          placeholder='Address'
-          {...register('address', {
+          type="text"
+          placeholder="Address"
+          {...register("address", {
             minLength: {
               value: 2,
-              message: 'Please enter a descriptive address',
+              message: "Please enter a descriptive address",
             },
           })}
         />
-        {errors.address && <p role='alert'>{errors.address.message}</p>}
+        {errors.address && <p role="alert">{errors.address.message}</p>}
 
         {!isValid && isDirty && (
-          <button type='button' onClick={handleResetErrorFields}>
+          <button type="button" onClick={handleResetErrorFields}>
             Reset error fields only
           </button>
         )}
-        <input type='submit' />
+        <input type="submit" />
       </form>
     </>
   );

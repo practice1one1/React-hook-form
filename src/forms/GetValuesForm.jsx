@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const defaultValues = {
-  firstname: 'default firstname',
-  lastname: 'default lastname',
+  firstname: "default firstname",
+  lastname: "default lastname",
 };
 
 export const GetValuesForm = () => {
@@ -17,18 +17,18 @@ export const GetValuesForm = () => {
 
   useEffect(() => {
     console.log(
-      'Current form values on re-calling effect / re-rendering: ',
-      getValues() // calling getValues() HERE returns form values on re-render
+      "Current form values on re-calling effect / re-rendering: ",
+      getValues(), // calling getValues() HERE returns form values on re-render
     );
   }, [state]);
 
   return (
     <>
       <form>
-        <input {...register('names.firstname')} />
+        <input {...register("names.firstname")} />
         <br />
         <br />
-        <input {...register('names.lastname')} />
+        <input {...register("names.lastname")} />
         <br />
         <br />
       </form>
@@ -37,8 +37,8 @@ export const GetValuesForm = () => {
         onClick={
           () =>
             console.log(
-              'Current form values on calling a handler: ',
-              getValues()
+              "Current form values on calling a handler: ",
+              getValues(),
             ) // calling getValues() here returns form values upon triggering handler
         }
       >

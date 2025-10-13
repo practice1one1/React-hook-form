@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import ReactSelect from 'react-select';
-import * as z from 'zod';
+import React, { useState } from "react";
+import ReactSelect from "react-select";
+import * as z from "zod";
 import {
   colorOptions,
   flavourOptions,
   groupedOptions,
-} from '../data/ReactSelectOptions';
-import { Controller, useForm } from 'react-hook-form';
-import { customZodResolver } from '../utils/customZodResolver';
+} from "../data/ReactSelectOptions";
+import { Controller, useForm } from "react-hook-form";
+import { customZodResolver } from "../utils/customZodResolver";
 
 const schema = z.object({
   colorsOrFlavours: z.object(
@@ -16,22 +16,22 @@ const schema = z.object({
         (label) => {
           const isPresentInColors = colorOptions.find((o) => o.label === label);
           const isPresentInFlavours = flavourOptions.find(
-            (o) => o.label === label
+            (o) => o.label === label,
           );
           return isPresentInColors || isPresentInFlavours;
         },
-        { error: 'Invalid option', abort: true } // abort flag prevents further validation checks if this first one fails
+        { error: "Invalid option", abort: true }, // abort flag prevents further validation checks if this first one fails
       ),
-      value: z.literal(['red', 'blue', 'green', 'yellow']),
+      value: z.literal(["red", "blue", "green", "yellow"]),
       isDisabled: z.boolean().optional(),
       isFixed: z.boolean().optional(),
       rating: z
         .number()
-        .min(0, 'Please provide a rating between 0 and 1')
-        .max(1, 'Please provide a rating between 0 and 1')
+        .min(0, "Please provide a rating between 0 and 1")
+        .max(1, "Please provide a rating between 0 and 1")
         .optional(),
     },
-    { error: 'Please select an option' }
+    { error: "Please select an option" },
   ),
 });
 
@@ -39,20 +39,20 @@ const schema = z.object({
 const formatGroupLabel = (groupedData) => (
   <div
     style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#e0efffff',
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#e0efffff",
     }}
   >
     <span>{groupedData.label}</span>
     <span
       style={{
-        marginLeft: '10px',
-        backgroundColor: '#0045b5ff',
-        color: '#fff',
-        padding: '5px',
-        borderRadius: '5px',
+        marginLeft: "10px",
+        backgroundColor: "#0045b5ff",
+        color: "#fff",
+        padding: "5px",
+        borderRadius: "5px",
       }}
     >
       {groupedData.options.length}
@@ -73,11 +73,11 @@ export const ControllerSelectForm = () => {
     <form
       onSubmit={handleSubmit(
         (d) => console.log(d),
-        (err) => console.error('Submit err:', err)
+        (err) => console.error("Submit err:", err),
       )}
     >
       <Controller
-        name='colorsOrFlavours'
+        name="colorsOrFlavours"
         control={control}
         render={({ field, fieldState }) => {
           return (
@@ -91,19 +91,19 @@ export const ControllerSelectForm = () => {
                 onBlur={field.onBlur}
                 value={field.value}
                 options={groupedOptions}
-                placeholder={'Select a color or flavour...'}
+                placeholder={"Select a color or flavour..."}
                 formatGroupLabel={formatGroupLabel}
                 isClearable
               />
               {fieldState.error && (
-                <p role='alert'>{fieldState.error.message}</p>
+                <p role="alert">{fieldState.error.message}</p>
               )}
             </>
           );
         }}
       />
 
-      <input type='submit' />
+      <input type="submit" />
     </form>
   );
 };

@@ -16,7 +16,7 @@ function zodToHookFormError(zodError: ZodError): FieldErrors {
 }
 
 export const customZodResolver = (
-  schema: ZodType
+  schema: ZodType,
 ): ((values: FieldValues) => { values: FieldValues; errors: FieldErrors }) => {
   return (values) => {
     try {

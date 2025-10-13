@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export const FormStateForm = () => {
   const {
@@ -9,7 +9,7 @@ export const FormStateForm = () => {
   } = useForm({
     defaultValues: {
       // always provide default values for isDirty to compare
-      aa: 'x',
+      aa: "x",
       bb: 1,
     },
   });
@@ -18,24 +18,24 @@ export const FormStateForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit((d) => console.log('Submitted', d))}>
+      <form onSubmit={handleSubmit((d) => console.log("Submitted", d))}>
         <input
-          type='text'
-          {...register('aa', {
-            pattern: { value: /^x/, message: 'Begin with x...' },
+          type="text"
+          {...register("aa", {
+            pattern: { value: /^x/, message: "Begin with x..." },
           })}
         />
-        {errors.aa && <p role='alert'>{errors.aa.message}</p>}
+        {errors.aa && <p role="alert">{errors.aa.message}</p>}
 
         <input
-          type='number'
-          {...register('bb', {
-            max: { value: 5, message: 'Not more than 5 allowed' },
+          type="number"
+          {...register("bb", {
+            max: { value: 5, message: "Not more than 5 allowed" },
           })}
         />
-        {errors.bb && <p role='alert'>{errors.bb.message}</p>}
+        {errors.bb && <p role="alert">{errors.bb.message}</p>}
 
-        <input type='submit' />
+        <input type="submit" />
       </form>
     </>
   );

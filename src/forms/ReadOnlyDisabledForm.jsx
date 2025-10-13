@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export const ReadOnlyDisabledForm = () => {
   const {
@@ -10,16 +10,16 @@ export const ReadOnlyDisabledForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit((d) => console.log('Submitted', d))}>
-        <input type='text' {...register('name')} readOnly />
+      <form onSubmit={handleSubmit((d) => console.log("Submitted", d))}>
+        <input type="text" {...register("name")} readOnly />
 
         <fieldset disabled>
           <legend>Address</legend>
-          <input type='text' {...register('street')} />
-          <input type='tel' {...register('contact')} />
+          <input type="text" {...register("street")} />
+          <input type="tel" {...register("contact")} />
         </fieldset>
 
-        <input type='submit' />
+        <input type="submit" />
       </form>
     </>
   );

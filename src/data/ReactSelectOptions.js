@@ -9,25 +9,25 @@
 
 // GROUPED OPTIONS:
 export const colorOptions = [
-  { value: 'red', label: 'Red', color: '#ff5630' },
-  { value: 'blue', label: 'Blue', color: '#3041ffff', isDisabled: true },
-  { value: 'yellow', label: 'Yellow', color: '#f1ff30ff', isFixed: true },
-  { value: 'green', label: 'Green', color: '#3aff30ff' },
+  { value: "red", label: "Red", color: "#ff5630" },
+  { value: "blue", label: "Blue", color: "#3041ffff", isDisabled: true },
+  { value: "yellow", label: "Yellow", color: "#f1ff30ff", isFixed: true },
+  { value: "green", label: "Green", color: "#3aff30ff" },
 ];
 
 export const flavourOptions = [
-  { label: 'Vanilla', value: 'vanilla', rating: 0.4 },
-  { label: 'Orange', value: 'orange', rating: 0.6 },
-  { label: 'Raspberry', value: 'raspberry', rating: 0.5 },
+  { label: "Vanilla", value: "vanilla", rating: 0.4 },
+  { label: "Orange", value: "orange", rating: 0.6 },
+  { label: "Raspberry", value: "raspberry", rating: 0.5 },
 ];
 
 export const groupedOptions = [
   {
-    label: 'Colors',
+    label: "Colors",
     options: colorOptions,
   },
   {
-    label: 'Flavours',
+    label: "Flavours",
     options: flavourOptions,
   },
 ];

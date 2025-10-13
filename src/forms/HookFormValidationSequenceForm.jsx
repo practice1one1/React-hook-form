@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export const HookFormValidationSequenceForm = () => {
   const {
@@ -7,44 +7,44 @@ export const HookFormValidationSequenceForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: 'onSubmit', //default
+    mode: "onSubmit", //default
     // reValidateMode: 'onChange', //default
     // by default, hook form initially validates form upon first submit attempt then upon each user input
   });
 
   return (
     <>
-      <form onSubmit={handleSubmit((d) => console.log('Submitted', d))}>
+      <form onSubmit={handleSubmit((d) => console.log("Submitted", d))}>
         <input
-          type='text'
-          {...register('userId', {
-            required: 'User ID is mandatory',
+          type="text"
+          {...register("userId", {
+            required: "User ID is mandatory",
             minLength: {
               value: 2,
-              message: 'Name should have atleast 2 characters',
+              message: "Name should have atleast 2 characters",
             },
           })}
         />
-        {errors.userId && <p role='alert'>{errors.userId.message}</p>}
+        {errors.userId && <p role="alert">{errors.userId.message}</p>}
 
         <input
-          type='password'
-          {...register('password', { required: 'Password is required' })}
+          type="password"
+          {...register("password", { required: "Password is required" })}
         />
-        {errors.password && <p role='alert'>{errors.password.message}</p>}
+        {errors.password && <p role="alert">{errors.password.message}</p>}
 
         <input
-          type='password'
-          {...register('confirmPassword', {
-            required: 'Please confirm password',
+          type="password"
+          {...register("confirmPassword", {
+            required: "Please confirm password",
             validate: (pwd) => pwd === password || "Passwords don't match",
           })}
         />
         {errors.confirmPassword && (
-          <p role='alert'>{errors.confirmPassword.message}</p>
+          <p role="alert">{errors.confirmPassword.message}</p>
         )}
 
-        <input type='submit' />
+        <input type="submit" />
       </form>
     </>
   );

@@ -30,7 +30,8 @@ function Form() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) }); //other meths: getValues,
 
-  const onSubmitData = (data: FieldValues) => { //data can also be assigned type FormData
+  const onSubmitData = (data: FieldValues) => {
+    //data can also be assigned type FormData
     // data will contain the form values, including the group in an object.
     console.log(data);
   };

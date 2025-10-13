@@ -1,27 +1,27 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export const WatchForm = () => {
   const { register, watch } = useForm();
 
   const allFields = watch();
-  const isToSelectGender = watch('showGender', false); // initialize wiht false
+  const isToSelectGender = watch("showGender", false); // initialize wiht false
 
-  console.log('Specific set of inputs: ', watch(['showGender', 'gender']));
+  console.log("Specific set of inputs: ", watch(["showGender", "gender"]));
 
   return (
     <>
       <form>
-        <input type='checkbox' {...register('showGender')} />
+        <input type="checkbox" {...register("showGender")} />
         <span>Show Gender selection</span>
         <br />
         <br />
 
         {isToSelectGender && (
-          <select {...register('gender')}>
-            <option value='male'>Male</option>
-            <option value='female'>Female</option>
-            <option value='other'>Other</option>
+          <select {...register("gender")}>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
           </select>
         )}
       </form>

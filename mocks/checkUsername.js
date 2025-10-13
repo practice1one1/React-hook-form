@@ -1,5 +1,5 @@
 export const checkUsername = (username) => {
-  const takenUsernames = ['john', 'mary', 'krishna'];
+  const takenUsernames = ["john", "mary", "krishna"];
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
