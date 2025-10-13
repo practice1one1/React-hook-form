@@ -1,4 +1,4 @@
-import { ResetForm } from "./forms/ResetForm";
+import { ControllerSelectForm } from "./forms/ControllerSelectForm";
 // import { ZodExptForm } from './forms/ZodExptForm';
 // import { ExptForm } from './forms/ExptForm';
 import "./style/AllForms.css";
@@ -6,7 +6,7 @@ import "./style/AllForms.css";
 const App = () => {
   return (
     <>
-      <ResetForm />
+      <ControllerSelectForm />
       {/* <ZodExptForm /> */}
       {/* <ExptForm /> */}
     </>
