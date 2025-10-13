@@ -11,6 +11,7 @@ export const ResetForm = () => {
   const {
     register,
     handleSubmit,
+    formState,
     formState: {
       errors,
       isValid,
@@ -41,9 +42,11 @@ export const ResetForm = () => {
   });
 
   useEffect(() => {
-    console.log("resetted");
-    reset(defaultValues);
-  }, [isSubmitSuccessful]);
+    if (isSubmitSuccessful) {
+      console.log("resetted");
+      reset(defaultValues);
+    }
+  }, [formState, reset]); // pass entire form state object as form state is updated in batch
 
   return (
     <>
