@@ -1,19 +1,29 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
+
+const defaultValues = {
+  name: "",
+  email: "",
+  address: "Plot 1, Garden road",
+};
 
 export const ResetForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isDirty, touchedFields, dirtyFields },
+    formState: {
+      errors,
+      isValid,
+      isDirty,
+      touchedFields,
+      dirtyFields,
+      isSubmitSuccessful,
+    },
     resetField,
+    reset,
     watch,
   } = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      address: "Plot 1, Garden road",
-    },
+    defaultValues,
   });
 
   console.log("Field values:", watch());
@@ -30,12 +40,17 @@ export const ResetForm = () => {
     });
   });
 
+  useEffect(() => {
+    console.log("resetted");
+    reset(defaultValues);
+  }, [isSubmitSuccessful]);
+
   return (
     <>
       <form
         onSubmit={handleSubmit(
           (d) => console.log("Submitted", d),
-          (err) => console.error("Submit error:", err),
+          (err) => console.error("Submit error:", err)
         )}
       >
         <input
