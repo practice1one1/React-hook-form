@@ -81,7 +81,7 @@ setValue() / getValues() → manually update/read values.
 
 reset() → resetting form state.
 
-useFieldArray() → dynamic fields like add/remove items.
+    useFieldArray() → dynamic fields like add/remove items.
 
 useFormContext() + FormProvider → manage multi-step or deeply nested forms.
 
