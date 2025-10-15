@@ -1,4 +1,4 @@
-import { FieldArrayForm } from "./forms/FieldArrayForm";
+import { NestedInFieldArrayForm } from "./forms/NestedInFieldArrayForm";
 // import { ZodExptForm } from './forms/ZodExptForm';
 // import { ExptForm } from './forms/ExptForm';
 import "./style/AllForms.css";
@@ -6,7 +6,7 @@ import "./style/AllForms.css";
 const App = () => {
   return (
     <>
-      <FieldArrayForm />
+      <NestedInFieldArrayForm />
       {/* <ZodExptForm /> */}
       {/* <ExptForm /> */}
     </>
