@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, useFieldArray, useWatch } from "react-hook-form";
 
 // [{id: 123, field1: "a"}, {id: 456, field1: "b"}] -> field groups (array)
@@ -9,10 +10,9 @@ export const ConditionalFieldGroupFromFieldArray = () => {
   const { handleSubmit, register, control } = useForm({
     defaultValues: {
       fieldGroupsArray: [
-        // though each prop in objects here represents a separate field, "shouldShow" (as well as the "id" added by useFieldArray) are not fields but just like meta that affects the fields in rendering
-        { conditionalField: "test", shouldShow: false },
-        { conditionalField: "test1", shouldShow: true },
-        { conditionalField: "test2", shouldShow: false },
+        { conditionalField: "test" },
+        { conditionalField: "test1" },
+        { conditionalField: "test2" },
       ],
     },
   });
@@ -20,6 +20,13 @@ export const ConditionalFieldGroupFromFieldArray = () => {
     control,
     name: "fieldGroupsArray",
   });
+  const [visibleFields, setVisibleFields] = useState(() => {
+    const values = fieldGroupsArray.map(({ conditionalField }) =>
+      String(conditionalField)
+    );
+    return values.filter((v) => v.includes("1") || v.includes("2"));
+  });
+  // console.log(visibleFields);
 
   return (
     <>
@@ -34,6 +41,7 @@ export const ConditionalFieldGroupFromFieldArray = () => {
               control={control}
               register={register}
               index={index}
+              visibleFields={visibleFields}
             />
           </div>
         ))}
@@ -42,7 +50,12 @@ export const ConditionalFieldGroupFromFieldArray = () => {
       </form>
 
       <button
-        onClick={() => append({ conditionalField: "test3", shouldShow: true })}
+        onClick={() => {
+          const newFieldVal = "test3";
+
+          setVisibleFields([...visibleFields, newFieldVal]);
+          append({ conditionalField: newFieldVal });
+        }}
       >
         Append
       </button>
@@ -50,11 +63,16 @@ export const ConditionalFieldGroupFromFieldArray = () => {
   );
 };
 
-const ConditionalField = ({ control, register, index }) => {
-  const shouldShow = useWatch({
+const ConditionalField = ({ control, register, index, visibleFields }) => {
+  const fieldGroup = useWatch({
     control,
-    name: `fieldGroupsArray[${index}].shouldShow`,
+    name: `fieldGroupsArray[${index}]`,
   });
+
+  let shouldShow = false;
+  if (fieldGroup) {
+    shouldShow = visibleFields.includes(fieldGroup.conditionalField);
+  }
 
   return (
     <>
