@@ -1,3 +1,8 @@
+// DIFFERENCE BETWEEN ConditionalFieldGroupFromFieldArray & ConditionalFieldFromFieldArray file:
+// ConditionalFieldGroupFromFieldArray - demonstrates a bunch of visible fields stored in state at the top level
+// ConditionalFieldFromFieldArray - demonstrates rendering an extra field, conditionally, below an always-rendered field, basing on the current value of that field
+// (Use better naming next time or create separate file with new code)
+
 import { useState } from "react";
 import { useForm, useFieldArray, useWatch } from "react-hook-form";
 
@@ -63,6 +68,10 @@ export const ConditionalFieldGroupFromFieldArray = () => {
   );
 };
 
+// For this simple example, instead of using useWatch() and conditionally rendering inputs using shouldShow, I would have just rendered <ConditionalField /> inside <form> basing on visibleFields!
+// However, the extracting the logic below is especially useful when using:
+// 1. <Controller> with controlled components + useWatch() to watch the array efficiently (prevents unnecessary re-renders)
+// 2. When rendering/ registering <input> that's deeply nested, hence passing visibleFields via props might be ambiguous
 const ConditionalField = ({ control, register, index, visibleFields }) => {
   const fieldGroup = useWatch({
     control,
