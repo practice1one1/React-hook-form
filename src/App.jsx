@@ -1,4 +1,4 @@
-import { ConditionalFieldGroupFromFieldArray } from "./forms/ConditionalFieldGroupFromFieldArray";
+import { ConditionalFieldFromFieldArray } from "./forms/ConditionalFieldFromFieldArray";
 // import { ZodExptForm } from './forms/ZodExptForm';
 // import { ExptForm } from './forms/ExptForm';
 import "./style/AllForms.css";
@@ -6,7 +6,7 @@ import "./style/AllForms.css";
 const App = () => {
   return (
     <>
-      <ConditionalFieldGroupFromFieldArray />
+      <ConditionalFieldFromFieldArray />
       {/* <ZodExptForm /> */}
       {/* <ExptForm /> */}
     </>
