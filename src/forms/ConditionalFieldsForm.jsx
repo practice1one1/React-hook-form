@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
 export const ConditionalFieldsForm = () => {
-  const { register, control, handleSubmit } = useForm({
+  const { register, control, handleSubmit, unregister } = useForm({
     defaultValues: {
       fields: [
         { label: "field1", value: "val1" }, // each object represents a single field. If to have mulitple fields in a group (implementing field groups), then make an array of subarrays: fields: [ [{}, {}], [{}, {}, {}], {} ]
@@ -10,7 +10,7 @@ export const ConditionalFieldsForm = () => {
         { label: "field3", value: "val3" },
       ],
     },
-    shouldUnregister: true,
+    shouldUnregister: true, // removes all props (eg label) & objects from the FieldValues (see in defaultValues above) that are not registered with /tied to <input> below
   });
 
   const { fields } = useFieldArray({
@@ -26,6 +26,13 @@ export const ConditionalFieldsForm = () => {
   };
 
   // console.log(visibleFields);
+
+  // No need of this effect as hook form's shouldUnregister flag does this internally
+  // useEffect(() => {
+  //   visibleFields.forEach((visible, index) => {
+  //     if (!visible) unregister(`fields.${index}`);
+  //   });
+  // }, [visibleFields]);
 
   return (
     <form
