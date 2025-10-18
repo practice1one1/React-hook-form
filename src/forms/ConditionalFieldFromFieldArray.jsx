@@ -2,6 +2,7 @@
 // ConditionalFieldGroupFromFieldArray - demonstrates a bunch of visible fields stored in state at the top level
 // ConditionalFieldFromFieldArray - demonstrates rendering an extra field, conditionally, below an always-rendered field, basing on the current value of that field
 // (Use better naming next time or create separate file with new code)
+// See ConditionalFieldsForm (new)
 
 import { useForm, useFieldArray, useWatch } from "react-hook-form";
 
