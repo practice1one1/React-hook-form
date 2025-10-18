@@ -60,13 +60,6 @@ export const ConditionalFieldsForm = () => {
     });
   };
 
-  useEffect(() => {
-    fieldObjects.forEach((f, i) => {
-      if (!f.isVisible)
-        setValue(`fields.${i}.value`, "", { shouldTouch: true });
-    });
-  }, [fieldObjects]);
-
   return (
     <form
       onSubmit={handleSubmit(
