@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { required } from "zod/mini";
 
 export const ConditionalFieldsForm = () => {
-  const { register, control, handleSubmit, unregister } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       fields: [
         { label: "field1", value: "val1" }, // each object represents a single field. If to have mulitple fields in a group (implementing field groups), then make an array of subarrays: fields: [ [{}, {}], [{}, {}, {}], {} ]
@@ -12,6 +18,7 @@ export const ConditionalFieldsForm = () => {
     },
     shouldUnregister: true, // removes all props (eg label) & objects from the FieldValues (see in defaultValues above) that are not registered with /tied to <input> below
   });
+  console.log("errors", errors);
 
   const { fields } = useFieldArray({
     control,
@@ -24,15 +31,6 @@ export const ConditionalFieldsForm = () => {
       visibilityStates.map((s, i) => (i === index ? !s : s))
     );
   };
-
-  // console.log(visibleFields);
-
-  // No need of this effect as hook form's shouldUnregister flag does this internally
-  // useEffect(() => {
-  //   visibleFields.forEach((visible, index) => {
-  //     if (!visible) unregister(`fields.${index}`);
-  //   });
-  // }, [visibleFields]);
 
   return (
     <form
@@ -47,6 +45,7 @@ export const ConditionalFieldsForm = () => {
           index={index}
           isVisible={visibleFields[index]}
           label={field.label}
+          errors={errors}
           value={field.value}
           register={register}
           toggleVisibility={toggleVisibility}
@@ -62,6 +61,7 @@ const Field = ({
   isVisible,
   label,
   value,
+  errors,
   register,
   toggleVisibility,
   index,
@@ -73,8 +73,15 @@ const Field = ({
           Hide {label}
         </button>
         <span>{label}</span>
-        <input {...register(`fields[${index}].value`)} />
+        <input
+          {...register(`fields[${index}].value`, {
+            required: "This field is required when not hidden",
+          })}
+        />
       </label>
+      {errors.fields?.[index]?.value && (
+        <p role="alert">{errors.fields[index].value.message}</p>
+      )}
     </div>
   ) : (
     <div>
