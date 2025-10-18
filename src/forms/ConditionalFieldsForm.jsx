@@ -19,7 +19,7 @@ const conditionalFieldsFormSchema = z.object({
         ctx.addIssue({
           code: "invalid_value",
           message: "This field is required when not hidden",
-          path: ["fields", `${index}`, "value"],
+          path: [`${index}`, "value"], // inform about path AFTER fields. ... because .superRefine() runs on values inside `fields`
         });
       }
     });
@@ -42,7 +42,6 @@ export const ConditionalFieldsForm = () => {
         { label: "field3", value: "val3", isVisible: false },
       ],
     },
-    // shouldUnregister: true, // removes all props (eg label and isVisible) and even objects from the FieldValues (see in defaultValues above) that are not registered with / tied to <input>s below. I prevented passing this option as it removes `isVisible` props from fields hence causing errors in passing fieldObjects.isVisible dynamically
     resolver: customZodResolver(conditionalFieldsFormSchema),
   });
 
@@ -60,11 +59,23 @@ export const ConditionalFieldsForm = () => {
     });
   };
 
+  const onSubmit = (fieldValues) => {
+    const visibleFields = fieldValues.fields.filter((f) => f.isVisible);
+    const fieldsToSubmit = visibleFields.map((f) => ({
+      label: f.label,
+      value: f.value,
+    })); // only include required fields to submit to server, ignore others eg isVisible
+
+    console.log("Submitted to server:", fieldsToSubmit);
+  };
+
+  const onError = (err) => console.error("Submit err", err);
+
   return (
     <form
       onSubmit={handleSubmit(
-        (d) => console.log(d), // you may manually remove `isVisible` and `label` before sending field values (form data) to server
-        (err) => console.error("Submit err", err)
+        onSubmit, // you may manually remove `isVisible` and `label` before sending field values (form data) to server
+        onError
       )}
     >
       {fields.map((field, index) => (
