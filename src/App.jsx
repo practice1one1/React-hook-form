@@ -1,10 +1,10 @@
-import { CheckboxFieldArrayForm } from "./forms/CheckboxFieldArrayForm";
+import { RadioFieldArrayForm } from "./forms/RadioFieldArrayForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <CheckboxFieldArrayForm />
+      <RadioFieldArrayForm />
     </>
   );
 };
