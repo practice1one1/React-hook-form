@@ -1,10 +1,10 @@
-import { FormContextMultiStepForm } from "./forms/FormContextMultiStepForm";
+import { AddRemoveFieldArrayForm } from "./forms/AddRemoveFieldArrayForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <FormContextMultiStepForm />
+      <AddRemoveFieldArrayForm />
     </>
   );
 };

@@ -83,11 +83,11 @@ reset() → resetting form state.
 
 useFieldArray() → dynamic fields like add/remove items.
 
-    useFormContext() + FormProvider → manage multi-step or deeply nested forms.
+useFormContext() + FormProvider → manage multi-step or deeply nested forms.
 
 📌 Experiment:
 
-Build a form with “Add more fields” functionality (like adding multiple addresses).
+    Build a form with “Add more fields” functionality (like adding multiple addresses).
 
 Create a multi-step form (step 1: personal info, step 2: contact info, step 3: review & submit).
 
