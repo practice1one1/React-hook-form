@@ -1,10 +1,29 @@
 import React from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
+import { customZodResolver } from "../utils/customZodResolver";
 
-// console.log('Field values:', watch());
-// console.log('%cTouched fields', 'color: lightblue', touchedFields);
-// console.log('%cDirty fields', 'color: yellow', dirtyFields);
-// console.log('%cError fields', 'color: red', errors);
+const fieldSchema = z.object({
+  label: z.string(),
+  selected: z
+    .array(
+      z.literal(
+        [
+          "lord radha krishna",
+          "lord radha gopinath",
+          "lord radha madana-mohana",
+        ],
+        {
+          error: "Invalid option selected",
+        }
+      )
+    )
+    .min(1, "Please select atleast one option"),
+});
+
+const checkboxFieldArraySchema = z.object({
+  fields: z.array(fieldSchema),
+});
 
 export const CheckboxFieldArrayForm = () => {
   const {
@@ -16,6 +35,7 @@ export const CheckboxFieldArrayForm = () => {
     defaultValues: {
       fields: [{ label: "deities", selected: [] }],
     },
+    resolver: customZodResolver(checkboxFieldArraySchema),
   });
 
   const { fields } = useFieldArray({
@@ -36,22 +56,8 @@ export const CheckboxFieldArrayForm = () => {
             <Controller // useFieldArray now only deals with this Controller's registered name. The Controller exposes a single array of selected options, instead of registering all checkboxes with smae name in useFieldArray
               name={`fields.${index}.selected`}
               control={control}
-              rules={{
-                required: "Please select atleast one option",
-                validate: (selectedOptions, allFieldValues) => {
-                  const validOptions = [
-                    "lord radha krishna",
-                    "lord radha gopinath",
-                    "lord radha madana-mohana",
-                  ];
-                  return (
-                    selectedOptions.some((option) =>
-                      validOptions.includes(option)
-                    ) || "Invalid option selected"
-                  );
-                },
-              }}
-              render={({ field, fieldState }) => {
+              render={({ field, formState }) => {
+                // errors object from RHF is actual nested eg errorsIssuesObj.fields[0].selected[0] hence it's accessible via `fieldState.error` as set by RHF. While zod returns errorsIssuesObj["fields.0.selected.0"] where "fields.0.selected.0" is the string prop name holding {message. type, etc} so access it via entire `formState.errors` (holding all errors)
                 const { value: selectedOptions, ref, onChange, onBlur } = field;
                 const handleCheckboxChange = (option) => {
                   if (selectedOptions.includes(option)) {
@@ -88,8 +94,23 @@ export const CheckboxFieldArrayForm = () => {
                       />
                     </label>
 
-                    {fieldState.error && (
-                      <p role="alert">{fieldState.error.message}</p>
+                    {Object.keys(formState.errors).length > 0 && (
+                      <>
+                        <p role="alert">
+                          {
+                            // error in entire `selected` field (when no option selected)
+                            formState.errors[`fields.${index}.selected`]
+                              ?.message
+                          }
+                        </p>
+                        <p role="alert">
+                          {
+                            // error in a particular selected optio (when invalid option value passed)
+                            formState.errors[`fields.${index}.selected.0`]
+                              ?.message // even though error is on the 2nd or 3rd checkbox, the path remains same "....selected.0"
+                          }
+                        </p>
+                      </>
                     )}
                   </>
                 );
