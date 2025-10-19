@@ -36,7 +36,22 @@ export const CheckboxFieldArrayForm = () => {
             <Controller // useFieldArray now only deals with this Controller's registered name. The Controller exposes a single array of selected options, instead of registering all checkboxes with smae name in useFieldArray
               name={`fields.${index}.selected`}
               control={control}
-              render={({ field }) => {
+              rules={{
+                required: "Please select atleast one option",
+                validate: (selectedOptions, allFieldValues) => {
+                  const validOptions = [
+                    "lord radha krishna",
+                    "lord radha gopinath",
+                    "lord radha madana-mohana",
+                  ];
+                  return (
+                    selectedOptions.some((option) =>
+                      validOptions.includes(option)
+                    ) || "Invalid option selected"
+                  );
+                },
+              }}
+              render={({ field, fieldState }) => {
                 const { value: selectedOptions, ref, onChange, onBlur } = field;
                 const handleCheckboxChange = (option) => {
                   if (selectedOptions.includes(option)) {
@@ -72,6 +87,10 @@ export const CheckboxFieldArrayForm = () => {
                         onChange={(e) => handleCheckboxChange(e.target.value)}
                       />
                     </label>
+
+                    {fieldState.error && (
+                      <p role="alert">{fieldState.error.message}</p>
+                    )}
                   </>
                 );
               }}
