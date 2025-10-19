@@ -31,7 +31,22 @@ export const RadioFieldArrayForm = () => {
             <Controller // useFieldArray now only deals with this Controller's registered name. The Controller exposes a single string/option, instead of registering all radios with same name in useFieldArray
               name={`fields.${index}.selected`}
               control={control}
-              render={({ field }) => {
+              rules={{
+                required: "Please select any one deity",
+                validate: (currentSelection, allFieldValues) => {
+                  const validOptions = [
+                    "lord radha krishna",
+                    "lord radha gopinath",
+                    "lord radha madana-mohana",
+                  ];
+
+                  return (
+                    validOptions.includes(currentSelection) ||
+                    "Invalid option selected"
+                  );
+                },
+              }}
+              render={({ field, fieldState }) => {
                 const { value, ref, onChange, onBlur } = field;
                 const handleRadioChange = (option) => onChange(option);
 
@@ -64,6 +79,10 @@ export const RadioFieldArrayForm = () => {
                         onChange={(e) => handleRadioChange(e.target.value)}
                       />
                     </label>
+
+                    {fieldState.error && (
+                      <p role="alert">{fieldState.error.message}</p>
+                    )}
                   </>
                 );
               }}
