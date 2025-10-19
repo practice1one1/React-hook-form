@@ -1,10 +1,10 @@
-import { RadioFieldArrayForm } from "./forms/RadioFieldArrayForm";
+import { FormContextMultiStepForm } from "./forms/FormContextMultiStepForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <RadioFieldArrayForm />
+      <FormContextMultiStepForm />
     </>
   );
 };
