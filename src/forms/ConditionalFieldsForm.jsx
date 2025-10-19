@@ -1,3 +1,8 @@
+// [{id: 123, field1: "a"}, {id: 456, field1: "b"}] -> fields (array)
+// {id: 123, field1: "a"} -> a field (only "field1" prop is registered, other props eg "id", "value", "label", "abcd"... are meta data that are needed during validation but can be removed before sending to server)
+// field1 -> field name
+// "a" -> field value
+
 import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import * as z from "zod";

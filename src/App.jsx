@@ -1,10 +1,10 @@
-import { ConditionalFieldsForm } from "./forms/ConditionalFieldsForm";
+import { CheckboxFieldArrayForm } from "./forms/CheckboxFieldArrayForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <ConditionalFieldsForm />
+      <CheckboxFieldArrayForm />
     </>
   );
 };
