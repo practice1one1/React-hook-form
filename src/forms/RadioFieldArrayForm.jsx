@@ -1,5 +1,19 @@
 import React from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
+import { customZodResolver } from "../utils/customZodResolver";
+
+const fieldSchema = z.object({
+  label: z.string(),
+  selected: z.literal(
+    ["lord radha krishna", "lord radha gopinath", "lord radha madana-mohana"],
+    "Please select a deity"
+  ),
+});
+
+const radioFieldArraySchema = z.object({
+  fields: z.array(fieldSchema),
+});
 
 export const RadioFieldArrayForm = () => {
   const {
@@ -11,6 +25,7 @@ export const RadioFieldArrayForm = () => {
     defaultValues: {
       fields: [{ label: "deities", selected: "" }],
     },
+    resolver: customZodResolver(radioFieldArraySchema),
   });
 
   const { fields } = useFieldArray({
@@ -31,22 +46,8 @@ export const RadioFieldArrayForm = () => {
             <Controller // useFieldArray now only deals with this Controller's registered name. The Controller exposes a single string/option, instead of registering all radios with same name in useFieldArray
               name={`fields.${index}.selected`}
               control={control}
-              rules={{
-                required: "Please select any one deity",
-                validate: (currentSelection, allFieldValues) => {
-                  const validOptions = [
-                    "lord radha krishna",
-                    "lord radha gopinath",
-                    "lord radha madana-mohana",
-                  ];
-
-                  return (
-                    validOptions.includes(currentSelection) ||
-                    "Invalid option selected"
-                  );
-                },
-              }}
-              render={({ field, fieldState }) => {
+              render={({ field, formState }) => {
+                // errors object from RHF is actual nested eg errorsIssuesObj.fields[0].selected[0] hence it's accessible via `fieldState.error` as set by RHF. While zod returns errorsIssuesObj["fields.0.selected.0"] where "fields.0.selected.0" is the string prop name holding {message. type, etc} so access it via entire `formState.errors` (holding all errors)
                 const { value, ref, onChange, onBlur } = field;
                 const handleRadioChange = (option) => onChange(option);
 
@@ -80,8 +81,15 @@ export const RadioFieldArrayForm = () => {
                       />
                     </label>
 
-                    {fieldState.error && (
-                      <p role="alert">{fieldState.error.message}</p>
+                    {Object.keys(formState.errors).length > 0 && (
+                      <>
+                        <p role="alert">
+                          {
+                            formState.errors[`fields.${index}.selected`] // where `fields.${index}.selected` is a prop at the "root" of errors object
+                              ?.message
+                          }
+                        </p>
+                      </>
                     )}
                   </>
                 );
