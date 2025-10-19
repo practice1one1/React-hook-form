@@ -1,5 +1,18 @@
 import React, { useState } from "react";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import z, { refine } from "zod";
+import { customZodResolver } from "../utils/customZodResolver";
+
+const schema = z.object({
+  fieldGroup1: z.object({
+    field1: z.string().trim().nonempty("Please fill in the fields"),
+    field2: z.number().min(3, "Field 2 cannot be below 3"),
+  }),
+  fieldGroup2: z.object({
+    field1: z.string().nonempty("Please fill in the fields"),
+    field2: z.number(),
+  }),
+});
 
 export const FormContextMultiStepForm = () => {
   const methods = useForm({
@@ -13,13 +26,19 @@ export const FormContextMultiStepForm = () => {
         field2: 5,
       },
     },
+    shouldUnregister: false,
+    resolver: customZodResolver(schema),
   });
 
   const [step, setStep] = useState(1);
 
   const handleStepping = async (direction) => {
     if (direction === "next") {
-      const isValid = await methods.trigger("fieldGroup1");
+      const isValid = await methods.trigger([
+        // when using zod validation with trigger() (and always), pass the exact field names eg this array instead of specifying the group name eg "fieldGroup1" as this fails to work
+        "fieldGroup1.field1",
+        "fieldGroup1.field2",
+      ]);
       if (isValid) setStep(step + 1);
     }
     if (direction === "back") {
@@ -33,8 +52,8 @@ export const FormContextMultiStepForm = () => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(
-            (d) => console.log("Submitted", d),
-            (err) => console.error("Submit error:", err)
+            (d) => console.log("Submitted", d)
+            // (err) => console.error("Submit error:", err)
           )}
         >
           {step === 1 && <StepOne />}
@@ -70,12 +89,7 @@ const StepOne = () => {
         <legend>Field Group 1</legend>
         <label>
           Field 1
-          <input
-            type="text"
-            {...register("fieldGroup1.field1", {
-              required: "Please fill in the fields",
-            })}
-          />
+          <input type="text" {...register("fieldGroup1.field1")} />
         </label>
         <label>
           Field 2
@@ -83,15 +97,14 @@ const StepOne = () => {
             type="number"
             {...register("fieldGroup1.field2", {
               valueAsNumber: true,
-              min: { value: 3, message: "Field 2 cannot be below 3" },
             })}
           />
         </label>
 
-        {errors.fieldGroup1 && (
+        {Object.keys(errors).length > 0 && (
           <p role="alert">
-            {errors.fieldGroup1.field1?.message || // showing both fields' errors
-              errors.fieldGroup1.field2?.message}
+            {errors.fieldGroup1?.field1?.message || // showing both fields' errors
+              errors.fieldGroup1?.field2?.message}
           </p>
         )}
       </fieldset>
@@ -111,12 +124,7 @@ const StepTwo = () => {
         <legend>Field Group 2</legend>
         <label>
           Field 1
-          <input
-            type="text"
-            {...register("fieldGroup2.field1", {
-              required: "Please fill in the fields",
-            })}
-          />
+          <input type="text" {...register("fieldGroup2.field1")} />
         </label>
         <label>
           Field 2
@@ -126,10 +134,10 @@ const StepTwo = () => {
           />
         </label>
 
-        {errors.fieldGroup2 && (
+        {Object.keys(errors).length > 0 && (
           <p role="alert">
-            {errors.fieldGroup2.field1?.message || // showing both fields' errors
-              errors.fieldGroup2.field2?.message}
+            {errors["fieldGroup2.field1"]?.message || // for some reason, the errors in step one are provided as nested objects errors.fieldGroup1.field1, while errors in step two (before submit) are provided in a single prop name errors["fieldGroup2.field1"]
+              errors["fieldGroup2.field2"]?.message}
           </p>
         )}
       </fieldset>
