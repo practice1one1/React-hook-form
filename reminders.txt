@@ -87,9 +87,9 @@ useFormContext() + FormProvider → manage multi-step or deeply nested forms.
 
 📌 Experiment:
 
-    Build a form with “Add more fields” functionality (like adding multiple addresses).
+Build a form with “Add more fields” functionality (like adding multiple addresses).
 
-Create a multi-step form (step 1: personal info, step 2: contact info, step 3: review & submit).
+    Create a multi-step form (step 1: personal info, step 2: contact info, step 3: review & submit).
 
 🔹 Step 5: Performance & Best Practices
 
@@ -118,8 +118,12 @@ Async validation (e.g., check if username is taken).
 
 Pre-filling forms with data (edit profile form).
 
-📌 Experiment:
+📌 Experiment (Make these simple & fast):
 
 Create a signup form that checks username availability from an API before submission.
 
 Create an edit form that pre-fills data and allows updates.
+
+📌📌📌 Make Porfolio Forms from all you learnt
+  style using native CSS
+  use multiple RHF features at once eg field-array with multistep etc

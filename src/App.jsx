@@ -1,10 +1,10 @@
-import { AddRemoveFieldArrayForm } from "./forms/AddRemoveFieldArrayForm";
+import { MultistepDemoForm } from "./forms/MultistepDemoForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <AddRemoveFieldArrayForm />
+      <MultistepDemoForm />
     </>
   );
 };
