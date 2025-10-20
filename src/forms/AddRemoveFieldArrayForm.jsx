@@ -10,12 +10,13 @@ const fieldSchema = z
       "Invalid field submitted"
     ),
     value: z.string(),
+    isCompulsory: z.boolean(),
   })
   .refine(
     (field) => {
+      console.log(field.isCompulsory);
       // district and town is optional but the rest are compulsory
-      const compulsory = ["Name", "Country", "Region"];
-      if (compulsory.includes(field.label)) {
+      if (field.isCompulsory) {
         return field.value.trim() !== "";
       } else {
         return true;
@@ -41,9 +42,9 @@ export const AddRemoveFieldArrayForm = () => {
   } = useForm({
     defaultValues: {
       personalDetailsFields: [
-        { label: "Name", value: "" },
-        { label: "Country", value: "" },
-        { label: "Region", value: "" },
+        { label: "Name", value: "", isCompulsory: true },
+        { label: "Country", value: "", isCompulsory: true },
+        { label: "Region", value: "", isCompulsory: true },
       ],
     },
     resolver: customZodResolver(addRemoveFieldArraySchema),
@@ -71,7 +72,10 @@ export const AddRemoveFieldArrayForm = () => {
           {fields.map((field, index) => (
             <div key={field.id}>
               <label>
-                {field.label}
+                <span>
+                  {field.label}
+                  {field.isCompulsory && "*"}
+                </span>
                 <input {...register(`personalDetailsFields.${index}.value`)} />
               </label>
               {errors[`personalDetailsFields.${index}`] && (
@@ -88,8 +92,8 @@ export const AddRemoveFieldArrayForm = () => {
               onClick={() =>
                 append(
                   [
-                    { label: "District", value: "" },
-                    { label: "Town", value: "" },
+                    { label: "District", value: "", isCompulsory: false },
+                    { label: "Town", value: "", isCompulsory: false },
                   ],
                   {
                     focusIndex: 3, // focuses on "District" after appending these. as "District" is the 4th field in the fields-array
