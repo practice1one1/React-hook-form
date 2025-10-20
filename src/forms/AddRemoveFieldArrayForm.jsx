@@ -1,5 +1,36 @@
 import React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import z from "zod";
+import { customZodResolver } from "../utils/customZodResolver";
+
+const fieldSchema = z
+  .object({
+    label: z.literal(
+      ["Name", "Country", "Region", "District", "Town"],
+      "Invalid field submitted"
+    ),
+    value: z.string(),
+  })
+  .refine(
+    (field) => {
+      // district and town is optional but the rest are compulsory
+      const compulsory = ["Name", "Country", "Region"];
+      if (compulsory.includes(field.label)) {
+        return field.value.trim() !== "";
+      } else {
+        return true;
+      }
+    },
+    {
+      error: "Please fill in the compulsory fields",
+    }
+  );
+
+const addRemoveFieldArraySchema = z.object({
+  personalDetailsFields: z
+    .array(fieldSchema)
+    .min(3, "Please submit Names, Country and Region"),
+});
 
 export const AddRemoveFieldArrayForm = () => {
   const {
@@ -15,6 +46,7 @@ export const AddRemoveFieldArrayForm = () => {
         { label: "Region", value: "" },
       ],
     },
+    resolver: customZodResolver(addRemoveFieldArraySchema),
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -25,7 +57,7 @@ export const AddRemoveFieldArrayForm = () => {
   const hasAddedExtraFields = fields.some(
     (f) => f.label === "District" || f.label === "Town"
   ); //no need to store extra unnecessary state var informing if a user has added extra fields, if it is attainable from avalable data
-  console.log(hasAddedExtraFields);
+
   return (
     <>
       <form
@@ -37,10 +69,17 @@ export const AddRemoveFieldArrayForm = () => {
         <fieldset>
           <legend>Personal Details</legend>
           {fields.map((field, index) => (
-            <label key={field.id}>
-              {field.label}
-              <input {...register(`personalDetailsFields.${index}.value`)} />
-            </label>
+            <div key={field.id}>
+              <label>
+                {field.label}
+                <input {...register(`personalDetailsFields.${index}.value`)} />
+              </label>
+              {errors[`personalDetailsFields.${index}`] && (
+                <p role="alert">
+                  {errors[`personalDetailsFields.${index}`].message}
+                </p>
+              )}
+            </div>
           ))}
 
           {!hasAddedExtraFields ? (
