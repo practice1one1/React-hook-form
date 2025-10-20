@@ -1,5 +1,37 @@
 import React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import z from "zod";
+import { customZodResolver } from "../utils/customZodResolver";
+
+const fieldSchema = z
+  .object({
+    label: z.literal(
+      ["Name", "Country", "Region", "District", "Town"],
+      "Invalid field submitted"
+    ),
+    value: z.string(),
+    isCompulsory: z.boolean(),
+  })
+  .refine(
+    (field) => {
+      console.log(field.isCompulsory);
+      // district and town is optional but the rest are compulsory
+      if (field.isCompulsory) {
+        return field.value.trim() !== "";
+      } else {
+        return true;
+      }
+    },
+    {
+      error: "Please fill in the compulsory fields",
+    }
+  );
+
+const addRemoveFieldArraySchema = z.object({
+  personalDetailsFields: z
+    .array(fieldSchema)
+    .min(3, "Please submit Names, Country and Region"),
+});
 
 export const AddRemoveFieldArrayForm = () => {
   const {
@@ -10,11 +42,12 @@ export const AddRemoveFieldArrayForm = () => {
   } = useForm({
     defaultValues: {
       personalDetailsFields: [
-        { label: "Name", value: "" },
-        { label: "Country", value: "" },
-        { label: "Region", value: "" },
+        { label: "Name", value: "", isCompulsory: true },
+        { label: "Country", value: "", isCompulsory: true },
+        { label: "Region", value: "", isCompulsory: true },
       ],
     },
+    resolver: customZodResolver(addRemoveFieldArraySchema),
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -25,7 +58,7 @@ export const AddRemoveFieldArrayForm = () => {
   const hasAddedExtraFields = fields.some(
     (f) => f.label === "District" || f.label === "Town"
   ); //no need to store extra unnecessary state var informing if a user has added extra fields, if it is attainable from avalable data
-  console.log(hasAddedExtraFields);
+
   return (
     <>
       <form
@@ -37,10 +70,20 @@ export const AddRemoveFieldArrayForm = () => {
         <fieldset>
           <legend>Personal Details</legend>
           {fields.map((field, index) => (
-            <label key={field.id}>
-              {field.label}
-              <input {...register(`personalDetailsFields.${index}.value`)} />
-            </label>
+            <div key={field.id}>
+              <label>
+                <span>
+                  {field.label}
+                  {field.isCompulsory && "*"}
+                </span>
+                <input {...register(`personalDetailsFields.${index}.value`)} />
+              </label>
+              {errors[`personalDetailsFields.${index}`] && (
+                <p role="alert">
+                  {errors[`personalDetailsFields.${index}`].message}
+                </p>
+              )}
+            </div>
           ))}
 
           {!hasAddedExtraFields ? (
@@ -49,8 +92,8 @@ export const AddRemoveFieldArrayForm = () => {
               onClick={() =>
                 append(
                   [
-                    { label: "District", value: "" },
-                    { label: "Town", value: "" },
+                    { label: "District", value: "", isCompulsory: false },
+                    { label: "Town", value: "", isCompulsory: false },
                   ],
                   {
                     focusIndex: 3, // focuses on "District" after appending these. as "District" is the 4th field in the fields-array
