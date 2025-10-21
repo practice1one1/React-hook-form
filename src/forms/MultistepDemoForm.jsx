@@ -1,29 +1,63 @@
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import z from "zod";
+import { customZodResolver } from "../utils/customZodResolver";
+
+const schema = z.object({
+  personalInfo: z.object({
+    name: z.string().nonempty("Please fill in your name"),
+    DOB: z.date("Please enter your date of birth"),
+  }),
+  contactInfo: z.object({
+    email: z.email("Please provide your email"),
+    telephone: z
+      .string()
+      .trim()
+      .regex(
+        /^\+?[0-9\s\-()]{5,20}$/, // smallest number with min 4 phone number digits + 1 country code digit. Largest number with 17 phone number digits + 3 country code digits
+        "Please enter a valid telephone number including country code"
+      ),
+    reviewInfo: z.object({
+      comment: z.string().optional(),
+    }),
+  }),
+});
 
 export const MultistepDemoForm = () => {
   const formMethods = useForm({
     defaultValues: {
       personalInfo: {
         name: "",
-        DOB: 0,
+        DOB: "",
       },
       contactInfo: {
         email: "",
-        telephone: 0,
+        telephone: "",
       },
       reviewInfo: {
         comment: "",
       },
     },
+    resolver: customZodResolver(schema),
   });
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, trigger } = formMethods;
 
   const [step, setStep] = useState(1);
 
-  const handleStepChange = useCallback((direction) => {
+  const handleStepChange = useCallback(async (direction) => {
     if (direction === "next" && step < 3) {
-      setStep(step + 1);
+      const fieldsToValidate =
+        step === 1
+          ? ["personalInfo.name", "personalInfo.DOB"]
+          : step === 2
+          ? ["contactInfo.email", "contactInfo.telephone"]
+          : null;
+
+      const isValid = await trigger(fieldsToValidate, { shouldFocus: true });
+      if (isValid) {
+        console.log(fieldsToValidate);
+        setStep(step + 1);
+      }
     } else if (direction === "back" && step > 1) {
       setStep(step - 1);
     }
@@ -86,7 +120,11 @@ const ContactInfoStep = ({ register }) => {
       </label>
       <label>
         Telephone
-        <input type="tel" {...register("contactInfo.telephone")} />
+        <input
+          type="tel"
+          {...register("contactInfo.telephone")}
+          placeholder="Please include country code"
+        />
       </label>
     </fieldset>
   );
