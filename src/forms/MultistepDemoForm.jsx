@@ -6,7 +6,7 @@ import { customZodResolver } from "../utils/customZodResolver";
 const schema = z.object({
   personalInfo: z.object({
     name: z.string().nonempty("Please fill in your name"),
-    DOB: z.date("Please enter your date of birth"),
+    DOB: z.coerce.date("Please enter your date of birth"),
   }),
   contactInfo: z.object({
     email: z.email("Please provide your email"),
@@ -17,9 +17,9 @@ const schema = z.object({
         /^\+?[0-9\s\-()]{5,20}$/, // smallest number with min 4 phone number digits + 1 country code digit. Largest number with 17 phone number digits + 3 country code digits
         "Please enter a valid telephone number including country code"
       ),
-    reviewInfo: z.object({
-      comment: z.string().optional(),
-    }),
+  }),
+  reviewInfo: z.object({
+    comment: z.string().optional(),
   }),
 });
 
