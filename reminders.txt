@@ -89,7 +89,7 @@ useFormContext() + FormProvider → manage multi-step or deeply nested forms.
 
 Build a form with “Add more fields” functionality (like adding multiple addresses).
 
-    Create a multi-step form (step 1: personal info, step 2: contact info, step 3: review & submit).
+Create a multi-step form (step 1: personal info, step 2: contact info, step 3: review & submit).
 
 🔹 Step 5: Performance & Best Practices
 
@@ -101,7 +101,7 @@ RHF avoids unnecessary re-renders — learn how.
 
 shouldUnregister vs keeping fields mounted.
 
-Optimizing with useController and form context.
+    Optimizing with useController and form context.
 
 📌 Experiment:
 Build a large form and profile performance (use React DevTools to check renders).
@@ -127,3 +127,6 @@ Create an edit form that pre-fills data and allows updates.
 📌📌📌 Make Porfolio Forms from all you learnt
   style using native CSS
   use multiple RHF features at once eg field-array with multistep etc
+
+
+
