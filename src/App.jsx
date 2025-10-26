@@ -1,10 +1,10 @@
-import { MultistepDemoForm } from "./forms/MultistepDemoForm";
+import { UseControllerForm } from "./forms/UseControllerForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <MultistepDemoForm />
+      <UseControllerForm />
     </>
   );
 };
