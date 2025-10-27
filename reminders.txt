@@ -103,6 +103,8 @@ shouldUnregister vs keeping fields mounted.
 
     Optimizing with useController and form context.
 
+React Dev Tools Profiler (to view re-renders?)
+
 📌 Experiment:
 Build a large form and profile performance (use React DevTools to check renders).
 

@@ -1,10 +1,10 @@
-import { UseControllerForm } from "./forms/UseControllerForm";
+import { ControllerAndContextForm } from "./forms/ControllerAndContextForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <UseControllerForm />
+      <ControllerAndContextForm />
     </>
   );
 };
