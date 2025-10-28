@@ -23,15 +23,13 @@ const controllerAndContextSchema = z.object({
   paymentMethod: z
     .object({
       method: z.literal(["card", "cash", "bank_transfer"]).default("card"),
-      expiryDate: z.coerce.date().optional(),
+      expiryDate: z.preprocess(
+        (dateString) => (dateString === "" ? undefined : dateString),
+        z.coerce.date("Please enter a valid date").optional()
+      ),
     })
     .refine(
       (data) => {
-        console.log(
-          "expected to be date obj or undefined:",
-          data.expiryDate,
-          typeof data.expiryDate
-        );
         if (data.method === "card") {
           return data.expiryDate !== undefined;
         }
