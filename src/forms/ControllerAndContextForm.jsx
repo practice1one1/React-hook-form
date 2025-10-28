@@ -33,9 +33,11 @@ const controllerAndContextSchema = z.object({
         if (data.method === "card") {
           return data.expiryDate !== undefined;
         }
+        return true;
       },
       {
         error: "Expiry date is required when payment method is card",
+        path: ["expiryDate"],
       }
     ),
 });
