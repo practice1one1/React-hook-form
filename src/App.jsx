@@ -1,10 +1,10 @@
-import { ControllerAndContextForm } from "./forms/ControllerAndContextForm";
+import { AsyncValidationForm } from "./forms/AsyncValidationForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <ControllerAndContextForm />
+      <AsyncValidationForm />
     </>
   );
 };

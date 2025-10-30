@@ -101,9 +101,9 @@ RHF avoids unnecessary re-renders — learn how.
 
 shouldUnregister vs keeping fields mounted.
 
-    Optimizing with useController and form context.
+Optimizing with useController and form context.
 
-React Dev Tools Profiler (to view re-renders?)
+React Dev Tools Profiler ✅ basic
 
 📌 Experiment:
 Build a large form and profile performance (use React DevTools to check renders).
@@ -116,7 +116,7 @@ Concepts:
 
 Submitting to backend APIs.
 
-Async validation (e.g., check if username is taken).
+    Async validation (e.g., check if username is taken).
 
 Pre-filling forms with data (edit profile form).
 
