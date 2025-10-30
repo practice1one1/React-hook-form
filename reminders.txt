@@ -116,13 +116,15 @@ Concepts:
 
 Submitting to backend APIs.
 
-    Async validation (e.g., check if username is taken).
+Async validation (e.g., check if username is taken).
 
 Pre-filling forms with data (edit profile form).
 
 📌 Experiment (Make these simple & fast):
 
 Create a signup form that checks username availability from an API before submission.
+  use zod async validation inside validate
+  also echo in submit
 
 Create an edit form that pre-fills data and allows updates.
 
