@@ -24,7 +24,7 @@ export const AsyncValidationForm = () => {
       );
       const resBody = await res.json();
 
-      return resBody.isExisting;
+      return resBody.parsedBody.isExisting;
     } catch (error) {
       console.log("Fetch err:", error);
     }
@@ -44,7 +44,7 @@ export const AsyncValidationForm = () => {
             required: "Username is required",
             validate: async (value) => {
               const isExisting = await checkUsernameExists(value);
-              return isExisting || "Username already exists";
+              return !isExisting || "Username already exists";
             },
           })}
         />
