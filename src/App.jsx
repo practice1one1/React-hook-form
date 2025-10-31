@@ -1,10 +1,10 @@
-import { AsyncValidationForm } from "./forms/AsyncValidationForm";
+import { SignUpForm } from "./forms/SignUpForm";
 import "./style/AllForms.css";
 
 const App = () => {
   return (
     <>
-      <AsyncValidationForm />
+      <SignUpForm />
     </>
   );
 };

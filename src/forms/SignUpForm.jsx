@@ -21,7 +21,7 @@ export const SignUpForm = () => {
       }
     );
 
-    return !res.ok; // manually alter booleans here, as res.ok is always true. Returning false means name doesn't exist ✅
+    return res.ok; // manually alter booleans here, as res.ok is always true. Returning false means name doesn't exist ✅
   }, []);
 
   return (
@@ -33,11 +33,16 @@ export const SignUpForm = () => {
           type="text"
           {...register("username", {
             required: "Username is required",
-            validate: async (input) =>
-              !checkNameExist(input) || "Username already exists",
+            validate: async (input) => {
+              const isExisting = await checkNameExist(input);
+              return !isExisting || "Username already exists";
+            },
           })}
+          placeholder="Username"
         />
       </fieldset>
+
+      <input type="submit" value="Sign Up" />
     </form>
   );
 };
