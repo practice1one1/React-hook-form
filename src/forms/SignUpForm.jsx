@@ -3,7 +3,11 @@ import { useFormContext, useForm } from "react-hook-form";
 import z from "zod";
 
 export const SignUpForm = () => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       username: "",
       passowrd: "",
@@ -21,7 +25,7 @@ export const SignUpForm = () => {
       }
     );
 
-    return !res.ok; // manually alter booleans here, as res.ok is always true. Returning false means name doesn't exist ✅
+    return res.ok; // manually alter booleans here, as res.ok is always true. Returning false means name doesn't exist ✅
   }, []);
 
   return (
@@ -40,6 +44,7 @@ export const SignUpForm = () => {
           })}
           placeholder="Username"
         />
+        {errors.username && <p role="alert">{errors.username.message}</p>}
       </fieldset>
 
       <input type="submit" value="Sign Up" />
