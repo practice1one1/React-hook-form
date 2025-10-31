@@ -21,7 +21,7 @@ export const SignUpForm = () => {
       }
     );
 
-    return res.ok; // manually alter booleans here, as res.ok is always true. Returning false means name doesn't exist ✅
+    return !res.ok; // manually alter booleans here, as res.ok is always true. Returning false means name doesn't exist ✅
   }, []);
 
   return (
